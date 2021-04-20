@@ -1,9 +1,12 @@
 package main
 
-import (
-	tcps "gohack/src/tcpScan"
-)
+import "fmt"
+
+//HELP ...
+var HELP = `
+1) Port Scanner
+`
 
 func main() {
-	tcps.ScanTCP()
+	fmt.Println(HELP)
 }
