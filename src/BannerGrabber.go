@@ -33,29 +33,23 @@ func _blindGrabHTTP(address string) {
 
 	}
 
-	curlCommand := exec.Command(cURL, []string{"-s", "-I", address})
-	wgetCommand := exec.Command(wGET, []string{"-q", "-S", address})
-
 	if flag1 != nil && flag2 != nil {
 		fmt.Printf("%s[*] Couldn't find either of cURL or wget, please install them to use the banner grabber...%s\n", ColorYellow, ColorReset)
 	} else {
 		if flag1 == nil {
-			curlCommand.Run()
+			_curlGrab(address)
 		} else if flag2 == nil {
-			wgetCommand.Run()
+			_wgetGrab(address)
 		}
 	}
 }
 
 func _curlGrab(address string) {
-	cURL, flag1 := exec.LookPath("curl")
+	curlCommand := exec.Command(cURL, "-s", "-I", address)
+	curlCommand.Run()
+}
 
-	if flag1 != nil {
-		fmt.Printf("%s[-] cURL not found in PATH ...%s\n", ColorRed, ColorReset)
-
-	} else {
-		curlCommand := exec.Command(cURL, []string{"-s", "-I", address})
-		curlCommand.Run()
-	}
-
+func _wgetGrab(address string) {
+	wgetCommand := exec.Command(wGET, "-q", "-S", address)
+	wgetCommand.Run()
 }
