@@ -3,6 +3,8 @@ package gohack
 import (
 	"fmt"
 	"os/exec"
+	"sync"
+	"time"
 )
 
 //BannerGrabber : A banner grabber
@@ -14,13 +16,29 @@ type BannerGrabber struct {
 }
 
 //Grab ...
-func (bg *BannerGrabber) Grab() {
+func (bg *BannerGrabber) Grab(lower int, upper int, timeout time.Duration) {
 	fmt.Printf("%s[*] Grabbing banner for: %s...\n", ColorYellow, bg.URL)
 
-	_blindGrabHTTP(bg.URL)
+	var wg sync.WaitGroup
+
+	for i := lower; i <= upper; i++ {
+		wg.Add(1)
+		go func(j int) {
+			defer wg.Done()
+			address := fmt.Sprintf("%s:%d", bg.URL, j)
+			res, err := _blindGrabHTTP(bg.URL)
+			if err != nil {
+				return
+			}
+			conn.Close()
+			fmt.Printf("%s[+] Port %d is Open.\n", ColorGreen, j)
+		}(i)
+	}
+	wg.Wait()
+
 }
 
-func _blindGrabHTTP(address string) {
+func _blindGrabHTTP(address string) (res string, err error) {
 	cURL, flag1 := exec.LookPath("curl")
 	wGET, flag2 := exec.LookPath("wget")
 
@@ -38,23 +56,23 @@ func _blindGrabHTTP(address string) {
 		fmt.Printf("%s[*] Couldn't find either of cURL or wget, please install them to use the banner grabber...%s\n", ColorYellow, ColorReset)
 	} else {
 		if flag1 == nil {
-			_curlGrab(cURL, address)
+			return _curlGrab(cURL, address)
 		} else if flag2 == nil {
-			_wgetGrab(wGET, address)
+			return _wgetGrab(wGET, address)
 		}
 	}
 }
 
-func _curlGrab(cURL string, address string) {
+func _curlGrab(cURL string, address string) (res string, err error) {
 	fmt.Printf("%s[*] Using cURL to perform the grab.\n", ColorYellow)
 
 	curlCommand := exec.Command(cURL, "-s", "-I", address)
-	curlCommand.Run()
+	curlCommand.Run() //TODO: add a return statement
 }
 
-func _wgetGrab(wGET string, address string) {
+func _wgetGrab(wGET string, address string) (res string, err error) {
 	fmt.Printf("%s[*] Using wGET to perform the grab.\n", ColorYellow)
 
 	wgetCommand := exec.Command(wGET, "-q", "-S", address)
-	wgetCommand.Run()
+	wgetCommand.Run() // TODO: add a return statement
 }
