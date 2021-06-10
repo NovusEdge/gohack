@@ -1,10 +1,10 @@
 package gohack
 
 import (
+	"bytes"
+	"errors"
 	"fmt"
 	"os/exec"
-	"sync"
-	"time"
 )
 
 //BannerGrabber : A banner grabber
@@ -16,25 +16,16 @@ type BannerGrabber struct {
 }
 
 //Grab ...
-func (bg *BannerGrabber) Grab(lower int, upper int, timeout time.Duration) {
+func (bg *BannerGrabber) Grab() {
 	fmt.Printf("%s[*] Grabbing banner for: %s...\n", ColorYellow, bg.URL)
 
-	var wg sync.WaitGroup
+	res, err := _blindGrabHTTP(bg.URL)
 
-	for i := lower; i <= upper; i++ {
-		wg.Add(1)
-		go func(j int) {
-			defer wg.Done()
-			address := fmt.Sprintf("%s:%d", bg.URL, j)
-			res, err := _blindGrabHTTP(bg.URL)
-			if err != nil {
-				return
-			}
-			conn.Close()
-			fmt.Printf("%s[+] Port %d is Open.\n", ColorGreen, j)
-		}(i)
+	if err != nil {
+		fmt.Printf("%s[-] E: %s\n", ColorRed, err)
+	} else {
+		fmt.Printf("%s[*] Banner Grab Successful!%s\nBanner:\n%s%s", ColorYellow, ColorReset, ColorGreen, res)
 	}
-	wg.Wait()
 
 }
 
@@ -61,18 +52,53 @@ func _blindGrabHTTP(address string) (res string, err error) {
 			return _wgetGrab(wGET, address)
 		}
 	}
+	return "", nil
 }
 
 func _curlGrab(cURL string, address string) (res string, err error) {
 	fmt.Printf("%s[*] Using cURL to perform the grab.\n", ColorYellow)
 
 	curlCommand := exec.Command(cURL, "-s", "-I", address)
-	curlCommand.Run() //TODO: add a return statement
+
+	stdout, _ := curlCommand.StdoutPipe()
+	stderr, _ := curlCommand.StderrPipe()
+
+	curlCommand.Start()
+
+	outBuf, errBuf := new(bytes.Buffer), new(bytes.Buffer)
+	outBuf.ReadFrom(stdout)
+	errBuf.ReadFrom(stderr)
+
+	res = outBuf.String()
+	errstr := errBuf.String()
+
+	if errstr != "" {
+		return "", errors.New(errstr)
+	}
+
+	return res, nil
 }
 
 func _wgetGrab(wGET string, address string) (res string, err error) {
 	fmt.Printf("%s[*] Using wGET to perform the grab.\n", ColorYellow)
 
 	wgetCommand := exec.Command(wGET, "-q", "-S", address)
-	wgetCommand.Run() // TODO: add a return statement
+
+	stdout, _ := wgetCommand.StdoutPipe()
+	stderr, _ := wgetCommand.StderrPipe()
+
+	wgetCommand.Start()
+
+	outBuf, errBuf := new(bytes.Buffer), new(bytes.Buffer)
+	outBuf.ReadFrom(stdout)
+	errBuf.ReadFrom(stderr)
+
+	res = outBuf.String()
+	errstr := errBuf.String()
+
+	if errstr != "" {
+		return "", errors.New(errstr)
+	}
+
+	return res, nil
 }
