@@ -18,4 +18,4 @@
 /venv/
 
 # Ignoring binaries:
-/bin/
+/bin/**
