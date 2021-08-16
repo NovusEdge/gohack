@@ -23,5 +23,5 @@ bin/
 # Exceptions for binaries:
 !bin/.gitkeep
 
-# Ignore the ./temp/ directory...
-temp/
+# Excluding error/system logs:
+logs/
