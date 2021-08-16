@@ -18,7 +18,10 @@
 venv/
 
 # Ignoring binaries:
-bin/*
+bin/
 
 # Exceptions for binaries:
 !bin/.gitkeep
+
+# Ignore the ./temp/ directory...
+temp/
