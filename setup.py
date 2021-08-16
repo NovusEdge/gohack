@@ -9,7 +9,7 @@ import time
 from datetime import datetime
 
 # For info on the system configuration:
-# import platform
+import platform
 
 # For verbose:
 import argparse
@@ -19,8 +19,15 @@ import pathlib
 import sys
 import os
 
-# For coloured text in stdout
-import colorama
+from colorama import Fore, Style
+
+# Colors!
+RED     = Fore.RED
+YELLOW  = Fore.YELLOW
+GREEN   = Fore.GREEN
+MAGENTA = Fore.MAGENTA
+CYAN    = Fore.CYAN
+WHITE   = Fore.WHITE
 
 
 ##################################################
@@ -28,10 +35,10 @@ import colorama
 ## Copyright: Copyright 2021, gohack
 ## License: MIT License
 ## Version: 0.1
+# For coloured text in stdout
 ##################################################
 
 
-# Changing pwd to parent-directory (of script) for the CLI.
 PATH = pathlib.Path(__file__).parent.absolute()
 os.chdir(PATH)
 
@@ -47,6 +54,7 @@ if pathlib.Path(__ERROR_LOGS_PATH).exists():
     __ERROR_LOGS = open(__ERROR_LOGS_PATH, "a")
     __ERROR_LOGS.write(f"\n\nLog__{TIME}\n\n")
 
+    # Changing pwd to parent-directory (of script) for the CLI.
 else:
     __ERROR_LOGS = open(__ERROR_LOGS_PATH, "w")
     __ERROR_LOGS.write(f"\n\nLog__{TIME}\n\n")
@@ -58,20 +66,25 @@ if not pathlib.Path("bin/").exists():
 
 
 # Fetching sys env
-ENV = os.environ
+ENV       = os.environ
+PLATFORM  = platform.system()
 
-
-# Cleaning old binaries (if present)
+# TODO: Figure out a way to do this quietly...
 # get_proc = subprocess.call("go get", stderr=__ERROR_LOGS, stdout=sys.stdout, env=ENV)
-os.system("go get")
 
 
+if PLATFORM in 'linux darwin':
+    proc = subprocess.Popen(["python3", "setup_scripts/setup_linux.py"], stderr=__ERROR_LOGS)
+    proc.communicate()
+    proc.close()
+
+elif PLATFORM == 'win32':
+    proc = subprocess.Popen(["python3", "setup_scripts/setup_windows.py"], stderr=__ERROR_LOGS)
+    proc.communicate()
+    proc.close()
+
+else:
+    print(f"{RED}[-] Platform not Supported :({Style.RESET_ALL}")
 
 # Closing opened files...
 __ERROR_LOGS.close()
-
-
-#go get
-#cd bin/
-#go clean
-#go build ../commands/*
