@@ -28,6 +28,7 @@ GREEN   = Fore.GREEN
 MAGENTA = Fore.MAGENTA
 CYAN    = Fore.CYAN
 WHITE   = Fore.WHITE
+CLEAR   = Style.RESET_ALL
 
 
 ##################################################
@@ -35,7 +36,6 @@ WHITE   = Fore.WHITE
 ## Copyright: Copyright 2021, gohack
 ## License: MIT License
 ## Version: 0.1
-# For coloured text in stdout
 ##################################################
 
 
@@ -64,6 +64,9 @@ else:
 if not pathlib.Path("bin/").exists():
     os.mkdir("bin")
 
+if not pathlib.Path("tool_bin/").exists():
+    os.mkdir("tool_bin")
+
 
 # Fetching sys env
 ENV       = os.environ
@@ -84,7 +87,7 @@ elif PLATFORM == 'win32':
     proc.close()
 
 else:
-    print(f"{RED}[-] Platform not Supported :({Style.RESET_ALL}")
+    print(f"{RED}[-] Platform not Supported :({CLEAR}")
 
 # Closing opened files...
 __ERROR_LOGS.close()
