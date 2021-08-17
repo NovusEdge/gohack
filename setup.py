@@ -52,39 +52,40 @@ __ERROR_LOGS_PATH = f"logs/setup_errors_{DATE}.log"
 # Creating a log file for the current run of the setup
 if pathlib.Path(__ERROR_LOGS_PATH).exists():
     __ERROR_LOGS = open(__ERROR_LOGS_PATH, "a")
-    __ERROR_LOGS.write(f"\n\nLog__{TIME}\n\n")
+    __ERROR_LOGS.write(f"\nLog__{TIME}\n")
 
     # Changing pwd to parent-directory (of script) for the CLI.
 else:
     __ERROR_LOGS = open(__ERROR_LOGS_PATH, "w")
-    __ERROR_LOGS.write(f"\n\nLog__{TIME}\n\n")
+    __ERROR_LOGS.write(f"\nLog__{TIME}\n")
 
 
 # Creating a directory for binaries
-if not pathlib.Path("bin/").exists():
-    os.mkdir("bin")
+if not pathlib.Path("src/bin/").exists():
+    os.mkdir("src/bin")
 
-if not pathlib.Path("tool_bin/").exists():
-    os.mkdir("tool_bin")
+if not pathlib.Path("src/tool_bin/").exists():
+    os.mkdir("src/tool_bin")
 
 
 # Fetching sys env
 ENV       = os.environ
 PLATFORM  = platform.system()
+print(PLATFORM)
 
 # TODO: Figure out a way to do this quietly...
 # get_proc = subprocess.call("go get", stderr=__ERROR_LOGS, stdout=sys.stdout, env=ENV)
 
 
-if PLATFORM in 'linux darwin':
+if PLATFORM in 'linux Linux darwin Darwin':
     proc = subprocess.Popen(["python3", "setup_scripts/setup_linux.py"], stderr=__ERROR_LOGS)
     proc.communicate()
-    proc.close()
+    proc.kill()
 
 elif PLATFORM == 'win32':
     proc = subprocess.Popen(["python3", "setup_scripts/setup_windows.py"], stderr=__ERROR_LOGS)
     proc.communicate()
-    proc.close()
+    proc.kill()
 
 else:
     print(f"{RED}[-] Platform not Supported :({CLEAR}")
