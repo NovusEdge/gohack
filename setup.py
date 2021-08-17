@@ -43,6 +43,11 @@ PATH = pathlib.Path(__file__).parent.absolute()
 os.chdir(PATH)
 
 
+# Creating a directory for logs:
+if not pathlib.Path("logs/").exists():
+    os.mkdir("logs")
+
+
 # Getting current date and time
 DATE = datetime.now().strftime("%d-%m-%Y")
 TIME = datetime.now().strftime("%H:%M:%S")
@@ -54,7 +59,7 @@ if pathlib.Path(__ERROR_LOGS_PATH).exists():
     __ERROR_LOGS = open(__ERROR_LOGS_PATH, "a")
     __ERROR_LOGS.write(f"\nLog__{TIME}\n")
 
-    # Changing pwd to parent-directory (of script) for the CLI.
+# Changing pwd to parent-directory (of script) for the CLI.
 else:
     __ERROR_LOGS = open(__ERROR_LOGS_PATH, "w")
     __ERROR_LOGS.write(f"\nLog__{TIME}\n")
