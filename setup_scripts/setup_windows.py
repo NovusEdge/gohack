@@ -19,6 +19,7 @@ WHITE   = Fore.WHITE            # Light Gray   0;37     White         1;37
 CLEAR   = Style.RESET_ALL
                                 # Use: $'\033[<code>'
 
+
 # TODO: add a check for presence of go and python installations on the system
 # System Environment:
 # ENV = os.environ
@@ -34,7 +35,7 @@ os.chdir(PATH)
 
 # Installing dependencies
 print(f"\n{YELLOW}[*] Installing golang and python dependencies ...{CLEAR}")
-command = '''pip install -r requirements.txt
+command = '''py -m pip install -r requirements.txt
 go clean
 go get
 '''
@@ -44,11 +45,11 @@ dep = subprocess.run(command, shell=True)
 # Removing all binaries in tool_bin
 print(f"\n{YELLOW}[*] Cleaning old binaries ...{CLEAR}")
 command = '''
-rm tool_bin/*
-rm bin/*
+del tool_bin\\*.* /f/s/q
+del bin\\*.* /f/s/q
 '''
+print(command)
 cleanup = subprocess.run(command, shell=True, capture_output=True)
-
 
 
 # Building all tools/commands in tool_bin as binaries.
