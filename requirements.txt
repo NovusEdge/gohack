@@ -1,6 +1,4 @@
-Package                           Version
---------------------------------- --------------
-colorama                          0.4.4
-wheel                             0.34.2
-setuptools                        52.0.0
-pip                               20.3.4
+colorama==0.4.4
+wheel==0.34.2
+setuptools==52.0.0
+pip==20.3.4
