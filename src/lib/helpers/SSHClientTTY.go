@@ -1,7 +1,7 @@
 package gohack
 
 import (
-    helpers "gohack/src/helpers"
+    helpers "gohack/lib/helpers"
     "time"
     "errors"
     "log"
@@ -20,5 +20,5 @@ type TTYClient struct {
 
 
 func (tc *TTYClient) Start() error {
-    
+
 }
