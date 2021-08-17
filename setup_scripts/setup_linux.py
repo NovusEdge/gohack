@@ -35,8 +35,10 @@ os.chdir(PATH)
 # Installing dependencies
 print(f"\n{YELLOW}[*] Installing golang and python dependencies ...{CLEAR}")
 command = '''pip install -r requirements.txt
+cd src/
 go clean
 go get
+cd ..
 '''
 dep = subprocess.run(command, shell=True)
 
@@ -44,8 +46,8 @@ dep = subprocess.run(command, shell=True)
 # Removing all binaries in tool_bin
 print(f"\n{YELLOW}[*] Cleaning old binaries ...{CLEAR}")
 command = '''
-rm tool_bin/*
-rm bin/*
+rm src/tool_bin/*
+rm src/bin/*
 '''
 cleanup = subprocess.run(command, shell=True, capture_output=True)
 
@@ -53,11 +55,12 @@ cleanup = subprocess.run(command, shell=True, capture_output=True)
 
 # Building all tools/commands in tool_bin as binaries.
 print(f"\n{YELLOW}[*] Building binaries for tools ...")
-TOOLS = os.listdir(f"{PATH}/commands")
+TOOLS = os.listdir(f"{PATH}/src/commands")
+os.chdir("src/tool_bin")
 for tool in TOOLS:
-    command = f'''cd tool_bin
-    go build ../commands/{tool}
-    '''
+    command = f"go build ../commands/{tool}"
     build = subprocess.run(command, shell=True)
+    
+os.chdir(PATH)
 
 print(CLEAR)

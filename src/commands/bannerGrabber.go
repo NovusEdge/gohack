@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	src "gohack/src"
+	src "gohack/lib"
 )
 
 func main() {

@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	p "gohack/src"
+	p "gohack/lib"
 	"time"
 )
 
