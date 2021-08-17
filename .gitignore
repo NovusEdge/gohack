@@ -20,6 +20,9 @@ venv/
 # Ignoring binaries:
 bin/
 
+# Ignoring tool binaries:
+tool_bin/
+
 # Exceptions for binaries:
 !bin/.gitkeep
 
