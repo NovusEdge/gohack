@@ -98,13 +98,6 @@ func (c *Command) ExecuteCommand() {
 	}
 }
 
-// UpdateArgs: ...
-/*
-
- */
-func (c *Command) UpdateArgs() {
-	// TODO: Implement this :P
-}
 
 func checkArgs(c Command) bool {
 	possible := c.Template.PossibleArguments
