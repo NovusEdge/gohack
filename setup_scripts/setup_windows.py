@@ -62,6 +62,12 @@ for tool in TOOLS:
     command = f"go build ../commands/{tool}"
     build = subprocess.run(command, shell=True)
 
-os.chdir(PATH)
+print(CLEAR); os.chdir(PATH)
 
-print(CLEAR)
+
+# Building the main binary:
+print(f"\n{YELLOW}[*] Building the main binary ...")
+os.chdir("src/bin")
+command = "go build ../gohack.go"
+subprocess.run(command, shell=True)
+print(CLEAR); os.chdir(PATH)

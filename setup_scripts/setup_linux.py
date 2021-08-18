@@ -40,7 +40,7 @@ go clean
 go get
 cd ..
 '''
-dep = subprocess.run(command, shell=True)
+subprocess.run(command, shell=True)
 
 
 # Removing all binaries in tool_bin
@@ -49,7 +49,7 @@ command = '''
 rm src/tool_bin/*
 rm src/bin/*
 '''
-cleanup = subprocess.run(command, shell=True, capture_output=True)
+subprocess.run(command, shell=True, capture_output=True)
 
 
 
@@ -59,8 +59,14 @@ TOOLS = os.listdir(f"{PATH}/src/commands")
 os.chdir("src/tool_bin")
 for tool in TOOLS:
     command = f"go build ../commands/{tool}"
-    build = subprocess.run(command, shell=True)
-    
-os.chdir(PATH)
+    subprocess.run(command, shell=True)
 
-print(CLEAR)
+print(CLEAR, end=""); os.chdir(PATH)
+
+
+# Building the main binary:
+print(f"\n{YELLOW}[*] Building the main binary ...")
+os.chdir("src/bin")
+command = "go build ../gohack.go"
+subprocess.run(command, shell=True)
+print(CLEAR); os.chdir(PATH)
