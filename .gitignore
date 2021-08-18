@@ -31,3 +31,6 @@ tool_bin/
 
 # Excluding error/system logs:
 logs/
+
+# Ignoring temporary files/directories:
+temp*

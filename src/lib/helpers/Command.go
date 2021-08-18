@@ -41,23 +41,23 @@ type Command struct {
 	Template CommandTemplate
 }
 
-// Maintain a Command struct for all tools and access in "gohack.go":
-var COMMANDS []CommandTemplate = []CommandTemplate{
-	//portScanner
-	CommandTemplate{
-		Aliases:           []string{"ps", "pscanner", "PORTSCANNER", "portscanner", "PortScanner"},
-		BinaryName:        "portScanner",
-		IsFunctional:      true,
-		PossibleArguments: []string{"start", "end", "timeout", "url", "protocol"},
-	},
+// MakeCommand: ...
+/*
 
-	//bannerGrabber
-	CommandTemplate{
-		Aliases:           []string{"bg", "bgrabber", "BANNERGRABBER", "bannergrabber", "BannerGrabber"},
-		BinaryName:        "bannerGrabber",
-		IsFunctional:      true,
-		PossibleArguments: []string{"url"},
-	},
+ */
+func MakeCommand(commandName string, args map[string]string) Command {
+	var match CommandTemplate
+
+	for template := range COMMANDS {
+		ok := checkAlias(template, commandName)
+		if ok {
+			return Command{Args: args, Template: template}
+		}
+	}
+
+	if !ok {
+		log.Fatal("Incorrect command :P")
+	}
 }
 
 // The useage has to be like:
@@ -130,8 +130,19 @@ func checkTemplate(key CommandTemplate) bool {
 	return false
 }
 
+// check the [alias] for one matching in [template]
+func checkAlias(template CommandTemplate, alias string) bool {
+	for a := range template.Aliases {
+		if a == alias {
+			return true
+		}
+	}
+	return false
+}
+
+// get the absolute path to the parent dir
 func getPath() string {
-	_, filename, _, ok := runtime.Caller(1)
+	_, filename, _, ok := runtime.Caller(0)
 	filepath := path.Dir(filename)
 
 	return filepath
