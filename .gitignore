@@ -17,6 +17,9 @@
 # Ignoring virtual environments:
 venv/
 
+# Ignoring local configs:
+.config/
+
 # Ignoring binaries:
 bin/
 
@@ -24,7 +27,7 @@ bin/
 tool_bin/
 
 # Exceptions for binaries:
-!bin/.gitkeep
+# !bin/.gitkeep
 
 # Excluding error/system logs:
 logs/
