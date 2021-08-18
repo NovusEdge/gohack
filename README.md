@@ -8,14 +8,14 @@
 `gohack` is a general-purpose tool library written in GO.
 
 <br>
-***
+---
 
 #### Installation:
 
 For the installation guide, refer to the wiki's [installation section](https://github.com/NovusEdge/gohack/wiki#installation)
 
 <br>
-***
+---
 
 #### License:
     MIT License
