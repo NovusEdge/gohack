@@ -19,6 +19,9 @@ import pathlib
 import sys
 import os
 
+# For reading env.yaml
+import yaml
+
 from colorama import Fore, Style
 
 # Colors!
@@ -95,5 +98,30 @@ elif PLATFORM == 'win32':
 else:
     print(f"{RED}[-] Platform not Supported :({CLEAR}")
 
+
+
+
+# Creating directory for environment
+if not pathlib.Path("./.config").exists():
+    os.mkdir("./.config")
+
+
+__ENV_FILE = open("./.config/env.yaml", "w+")
+current_env = yaml.load(__ENV_FILE, Loader=yaml.FullLoader) or {}
+
+##### Environment Variables for the project ######
+INSTALLATIONPATH = str(PATH)
+TOOLBINARIES     = f"{PATH}/src/tool_bin"
+BINARIES         = f"{PATH}/src/bin"
+##################################################
+
+current_env["INSTALLATIONPATH"] = INSTALLATIONPATH
+current_env["TOOLBINARIES"]     = TOOLBINARIES
+current_env["BINARIES"]         = BINARIES
+
+yaml.dump(current_env, __ENV_FILE)
+
+
 # Closing opened files...
 __ERROR_LOGS.close()
+__ENV_FILE.close()
