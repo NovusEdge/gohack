@@ -1,6 +1,5 @@
 package main
 
-
 // For later use :P
 // import (
 //     helpers "gohack/lib/helpers"

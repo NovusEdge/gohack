@@ -1,15 +1,20 @@
 package gohack
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"path"
 	"reflect"
 	"runtime"
+	"strings"
 
 	gohack "gohack/lib"
 	"os/exec"
+
+	"gopkg.in/yaml.v3"
 )
 
 // CommandTemplate
@@ -72,7 +77,7 @@ $ gohack <tool_name/alias> args ...
 func (c *Command) ExecuteCommand() {
 	templateCheck := checkTemplate(c.Template)
 	argCheck := checkArgs(*c)
-	currentPath := getPath()
+	toolPath := getConfig()["TOOLBINARIES"]
 
 	if !(templateCheck && argCheck) {
 		err := errors.New(gohack.ColorRed + "[-] E: Invalid template/args" + gohack.ColorReset)
@@ -80,9 +85,17 @@ func (c *Command) ExecuteCommand() {
 	}
 
 	argString := makeArgsString(c.Args)
-	execCommand := fmt.Sprintf("%s/tool_bin/%s %s", currentPath, c.Template.BinaryName, argString)
+	execCommand := fmt.Sprintf("%s/%s", toolPath, c.Template.BinaryName)
 
-	exec.Command(execCommand)
+	cmd := exec.Command(execCommand, strings.Split(argString, " ")...)
+
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	runErr := cmd.Run()
+	if runErr != nil {
+		log.Fatal(runErr)
+	}
 }
 
 // UpdateArgs: ...
@@ -90,6 +103,7 @@ func (c *Command) ExecuteCommand() {
 
  */
 func (c *Command) UpdateArgs() {
+	// TODO: Implement this :P
 }
 
 func checkArgs(c Command) bool {
@@ -146,4 +160,22 @@ func getPath() string {
 	filepath := path.Dir(filename)
 
 	return filepath
+}
+
+func getConfig() map[interface{}]interface{} {
+	currentPath := getPath()
+	file := fmt.Sprintf("%s/.config/env.yaml", currentPath)
+	yfile, err := ioutil.ReadFile(file)
+	if err1 != nil {
+		log.Fatal(err1)
+	}
+
+	ENV := make(map[interface{}]interface{})
+	err2 := yaml.Unmarshal(yfile, &ENV)
+
+	if err2 != nil {
+		log.Fatal(err2)
+	}
+
+	return ENV
 }
