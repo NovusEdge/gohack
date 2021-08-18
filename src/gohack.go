@@ -1,13 +1,13 @@
 package main
 
-import "fmt"
 
-//HELP ...
-var HELP = `
-1) Port Scanner
-2) Banner Grabber
-`
+// For later use :P
+// import (
+//     helpers "gohack/lib/helpers"
+//     "fmt"
+//     "flag"
+// )
 
 func main() {
-	fmt.Println(HELP)
+
 }
