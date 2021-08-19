@@ -7,9 +7,10 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"os/exec"
 	"reflect"
 	"strings"
-	"os/exec"
+
 	"github.com/joho/godotenv"
 )
 
