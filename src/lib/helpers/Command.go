@@ -1,20 +1,16 @@
 package gohack
 
 import (
+	gohack "gohack/lib"
+
 	"bytes"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"log"
-	"path"
 	"reflect"
-	"runtime"
 	"strings"
-
-	gohack "gohack/lib"
 	"os/exec"
-
-	"gopkg.in/yaml.v3"
+	"github.com/joho/godotenv"
 )
 
 // CommandTemplate
@@ -48,19 +44,14 @@ type Command struct {
 /*
 
  */
-func MakeCommand(commandName string, args map[string]string) Command {
-	var match CommandTemplate
-
-	for template := range COMMANDS {
-		ok := checkAlias(template, commandName)
-		if ok {
-			return Command{Args: args, Template: template}
+func MakeCommand(commandName string, args map[string]string) *Command {
+	for _, template := range COMMANDS {
+		if checkAlias(template, commandName) {
+			return &Command{Args: args, Template: template}
 		}
 	}
-
-	if !ok {
-		log.Fatal("Incorrect command :P")
-	}
+	log.Fatal("Incorrect command :P")
+	return nil
 }
 
 // The useage has to be like:
@@ -78,16 +69,17 @@ func (c *Command) ExecuteCommand() (string, string, error) {
 	templateCheck := checkTemplate(c.Template)
 
 	if !(templateCheck) {
-		err := errors.New(gohack.ColorRed + "[-] E: Invalid template" + gohack.ColorReset)
+		err := errors.New(gohack.ColorRed + "[!] E: Invalid command." + gohack.ColorReset)
 		return "", "", err
 	}
-
+	ENV := getConfig()
 	argString := makeArgsString(c.Args)
-	helperPath := fmt.Sprintf("%s/%s", getConfig()["INSTALLATIONPATH"], "src/lib/helpers")
-	toolPath := fmt.Sprintf("%s/%s", getConfig()["TOOLBINARIES"], c.Template.BinaryName)
+	toolPath := fmt.Sprintf("%s/%s", ENV["TOOLBINARIES"], c.Template.BinaryName)
+	args := []string{}
+	args = append(args, strings.Split(argString, " ")...)
 
-	execCommand := fmt.Sprintf("%s/Command.py", helperPath)
-	cmd := exec.Command("python3", execCommand, toolPath, strings.Split(argString, " ")...)
+	cmd := exec.Command(toolPath, args...)
+	fmt.Println(cmd.Dir)
 
 	cmd.Stdout = &_stdout
 	cmd.Stderr = &_stderr
@@ -108,7 +100,7 @@ func makeArgsString(args map[string]string) (res string) {
 }
 
 func containsString(array []string, key string) bool {
-	for i := range array {
+	for _, i := range array {
 		if i == key {
 			return true
 		}
@@ -128,7 +120,7 @@ func checkTemplate(key CommandTemplate) bool {
 
 // check the [alias] for one matching in [template]
 func checkAlias(template CommandTemplate, alias string) bool {
-	for a := range template.Aliases {
+	for _, a := range template.Aliases {
 		if a == alias {
 			return true
 		}
@@ -136,28 +128,11 @@ func checkAlias(template CommandTemplate, alias string) bool {
 	return false
 }
 
-// get the absolute path to the parent dir
-func getPath() string {
-	_, filename, _, ok := runtime.Caller(0)
-	filepath := path.Dir(filename)
-
-	return filepath
-}
-
-func getConfig() map[interface{}]interface{} {
-	currentPath := getPath()
-	file := fmt.Sprintf("%s/.config/env.yaml", currentPath)
-	yfile, err := ioutil.ReadFile(file)
-	if err1 != nil {
-		log.Fatal(err1)
+// get the project env
+func getConfig() map[string]string {
+	ENV, err := godotenv.Read()
+	if err != nil {
+		log.Fatal(err)
 	}
-
-	ENV := make(map[interface{}]interface{})
-	err2 := yaml.Unmarshal(yfile, &ENV)
-
-	if err2 != nil {
-		log.Fatal(err2)
-	}
-
 	return ENV
 }
