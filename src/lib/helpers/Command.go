@@ -26,13 +26,11 @@ Fields:
 	Aliases           []string
     BinaryName        string
 	IsFunctional      bool
-    PossibleArguments []string
 */
 type CommandTemplate struct {
-	Aliases           []string
-	BinaryName        string
-	IsFunctional      bool
-	PossibleArguments []string
+	Aliases      []string
+	BinaryName   string
+	IsFunctional bool
 }
 
 // Command
@@ -74,41 +72,32 @@ $ gohack <tool_name/alias> args ...
 /*
 
  */
-func (c *Command) ExecuteCommand() {
+func (c *Command) ExecuteCommand() (string, string, error) {
+	var _stdout bytes.Buffer
+	var _stderr bytes.Buffer
 	templateCheck := checkTemplate(c.Template)
-	argCheck := checkArgs(*c)
-	toolPath := getConfig()["TOOLBINARIES"]
 
-	if !(templateCheck && argCheck) {
-		err := errors.New(gohack.ColorRed + "[-] E: Invalid template/args" + gohack.ColorReset)
-		log.Fatal(err)
+	if !(templateCheck) {
+		err := errors.New(gohack.ColorRed + "[-] E: Invalid template" + gohack.ColorReset)
+		return "", "", err
 	}
 
 	argString := makeArgsString(c.Args)
-	execCommand := fmt.Sprintf("%s/%s", toolPath, c.Template.BinaryName)
+	helperPath := fmt.Sprintf("%s/%s", getConfig()["INSTALLATIONPATH"], "src/lib/helpers")
+	toolPath := fmt.Sprintf("%s/%s", getConfig()["TOOLBINARIES"], c.Template.BinaryName)
 
-	cmd := exec.Command(execCommand, strings.Split(argString, " ")...)
+	execCommand := fmt.Sprintf("%s/Command.py", helperPath)
+	cmd := exec.Command("python3", execCommand, toolPath, strings.Split(argString, " ")...)
 
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
+	cmd.Stdout = &_stdout
+	cmd.Stderr = &_stderr
 
 	runErr := cmd.Run()
 	if runErr != nil {
-		log.Fatal(runErr)
+		return "", "", runErr
 	}
-}
 
-
-func checkArgs(c Command) bool {
-	possible := c.Template.PossibleArguments
-	args := c.Args
-
-	for k, _ := range args {
-		if containsString(possible, k) {
-			return true
-		}
-	}
-	return false
+	return _stdout.String(), _stderr.String(), nil
 }
 
 func makeArgsString(args map[string]string) (res string) {
@@ -131,7 +120,7 @@ func containsString(array []string, key string) bool {
 func checkTemplate(key CommandTemplate) bool {
 	for template := range COMMANDS {
 		if reflect.DeepEqual(template, key) {
-			return true
+			return true && key.IsFunctional
 		}
 	}
 	return false
