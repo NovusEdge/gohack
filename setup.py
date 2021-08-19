@@ -19,9 +19,6 @@ import pathlib
 import sys
 import os
 
-# For reading env.yaml
-import yaml
-
 from colorama import Fore, Style
 
 # Colors!
@@ -60,12 +57,14 @@ __ERROR_LOGS_PATH = f"logs/setup_errors_{DATE}.log"
 # Creating a log file for the current run of the setup
 if pathlib.Path(__ERROR_LOGS_PATH).exists():
     __ERROR_LOGS = open(__ERROR_LOGS_PATH, "a")
-    __ERROR_LOGS.write(f"\nLog__{TIME}\n")
+    __ERROR_LOGS.write(f"\nLog__{TIME}")
+    __ERROR_LOGS.write("\n" + "-"*80)
 
 # Changing pwd to parent-directory (of script) for the CLI.
 else:
     __ERROR_LOGS = open(__ERROR_LOGS_PATH, "w")
-    __ERROR_LOGS.write(f"\nLog__{TIME}\n")
+    __ERROR_LOGS.write(f"\nLog__{TIME}")
+    __ERROR_LOGS.write("\n" + "-"*80)
 
 
 # Creating a directory for binaries
@@ -89,25 +88,19 @@ if PLATFORM in 'linux Linux darwin Darwin':
     proc = subprocess.Popen(["python3", "setup_scripts/setup_linux.py"], stderr=__ERROR_LOGS)
     proc.communicate()
     proc.kill()
+    __ERROR_LOGS.write("\n" + "-"*80)
 
 elif PLATFORM == 'win32':
     proc = subprocess.Popen(["python3", "setup_scripts/setup_windows.py"], stderr=__ERROR_LOGS)
     proc.communicate()
     proc.kill()
+    __ERROR_LOGS.write("\n" + "-"*80)
 
 else:
     print(f"{RED}[-] Platform not Supported :({CLEAR}")
 
 
-
-
-# Creating directory for environment
-if not pathlib.Path("./.config").exists():
-    os.mkdir("./.config")
-
-
-__ENV_FILE = open("./.config/env.yaml", "w+")
-current_env = yaml.load(__ENV_FILE, Loader=yaml.FullLoader) or {}
+__ENV_FILE = open("src/.env", "w+")
 
 ##### Environment Variables for the project ######
 INSTALLATIONPATH = str(PATH)
@@ -115,11 +108,9 @@ TOOLBINARIES     = f"{PATH}/src/tool_bin"
 BINARIES         = f"{PATH}/src/bin"
 ##################################################
 
-current_env["INSTALLATIONPATH"] = INSTALLATIONPATH
-current_env["TOOLBINARIES"]     = TOOLBINARIES
-current_env["BINARIES"]         = BINARIES
-
-yaml.dump(current_env, __ENV_FILE)
+__ENV_FILE.write(f"INSTALLATIONPATH={INSTALLATIONPATH}\n")
+__ENV_FILE.write(f"TOOLBINARIES={TOOLBINARIES}\n")
+__ENV_FILE.write(f"BINARIES={BINARIES}\n")
 
 
 # Closing opened files...
