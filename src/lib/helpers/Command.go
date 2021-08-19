@@ -70,6 +70,7 @@ func (c *Command) ExecuteCommand() (string, string, error) {
 	templateCheck := checkTemplate(c.Template)
 
 	if !(templateCheck) {
+		fmt.Println(c.Template)
 		err := errors.New(gohack.ColorRed + "[!] E: Invalid command." + gohack.ColorReset)
 		return "", "", err
 	}
@@ -79,8 +80,9 @@ func (c *Command) ExecuteCommand() (string, string, error) {
 	args := []string{}
 	args = append(args, strings.Split(argString, " ")...)
 
+	fmt.Println(args)
+
 	cmd := exec.Command(toolPath, args...)
-	fmt.Println(cmd.Dir)
 
 	cmd.Stdout = &_stdout
 	cmd.Stderr = &_stderr
@@ -111,7 +113,7 @@ func containsString(array []string, key string) bool {
 
 // checks if the supplied template is present in COMMANDS
 func checkTemplate(key CommandTemplate) bool {
-	for template := range COMMANDS {
+	for _, template := range COMMANDS {
 		if reflect.DeepEqual(template, key) {
 			return true && key.IsFunctional
 		}
@@ -121,8 +123,12 @@ func checkTemplate(key CommandTemplate) bool {
 
 // check the [alias] for one matching in [template]
 func checkAlias(template CommandTemplate, alias string) bool {
+	if alias == template.BinaryName {
+		return true
+	}
 	for _, a := range template.Aliases {
 		if a == alias {
+			fmt.Println(a)
 			return true
 		}
 	}

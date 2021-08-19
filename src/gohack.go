@@ -46,6 +46,11 @@ func main() {
 }
 
 func checkForHelp(args []string) bool {
+	if len(args) == 0 {
+		help() // define stuff >.<
+		helpers.ShowCommands() // :'D
+		return true
+	}
 	if args[0] == "help" {
 		if len(args) == 1 {
 			helpers.ShowCommands()
@@ -56,4 +61,8 @@ func checkForHelp(args []string) bool {
 		return true
 	}
 	return false
+}
+
+func help() string {
+	return ""
 }
