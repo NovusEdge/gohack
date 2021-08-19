@@ -70,7 +70,6 @@ func (c *Command) ExecuteCommand() (string, string, error) {
 	templateCheck := checkTemplate(c.Template)
 
 	if !(templateCheck) {
-		fmt.Println(c.Template)
 		err := errors.New(gohack.ColorRed + "[!] E: Invalid command." + gohack.ColorReset)
 		return "", "", err
 	}
@@ -127,9 +126,8 @@ func checkAlias(template CommandTemplate, alias string) bool {
 		return true
 	}
 	for _, a := range template.Aliases {
+		return true
 		if a == alias {
-			fmt.Println(a)
-			return true
 		}
 	}
 	return false
