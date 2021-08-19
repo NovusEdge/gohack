@@ -34,3 +34,6 @@ logs/
 
 # Ignoring temporary files/directories:
 temp*
+
+# Ignoring __pycache__
+__pycache__/
