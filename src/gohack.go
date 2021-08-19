@@ -1,12 +1,28 @@
 package main
 
-// For later use :P
-// import (
-//     helpers "gohack/lib/helpers"
-//     "fmt"
-//     "flag"
-// )
+import (
+    helpers "gohack/lib/helpers"
+
+	"os"
+)
 
 func main() {
+	args := os.Args[1:]
+    if checkForHelp(args){
+        os.Exit(0)
+    }
 
+}
+
+func checkForHelp(args []string) bool {
+    if args[0] == "help" {
+        if len(args) == 1 {
+            helpers.ShowCommands()
+            return true
+        }
+        tool := args[1]
+        helpers.CommandHelp(tool)
+        return true
+    }
+    return false
 }
