@@ -16,14 +16,14 @@ func main() {
 		os.Exit(0)
 	}
 
-	flag.Var(&helpers.Start.Value, "start", "Starting Port for a port-range")
-	flag.Var(&helpers.End.Value, "end", "Ending Port for a port-range")
-	flag.Var(&helpers.Port.Value, "port", "The port to end scanning.")
+	flag.IntVar(&helpers.Start.Value, "start", 1, "Starting Port for a port-range")
+	flag.IntVar(&helpers.End.Value, "end", 1024,"Ending Port for a port-range")
+	flag.IntVar(&helpers.Port.Value, "port", 80,"The port to end scanning.")
 
-	flag.Var(&helpers.URL.Value, "url", "Target URL")
-	flag.Var(&helpers.Protocol.Value, "protocol", "Network protocol for a specific tool.")
+	flag.StringVar(&helpers.URL.Value, "url", "google.com","Target URL")
+	flag.StringVar(&helpers.Protocol.Value, "protocol", "tcp", "Network protocol for a specific tool.")
 
-	flag.Var(&helpers.Timeout.Value, "timeout", "Timeout for process/each-process")
+	flag.DurationVar(&helpers.Timeout.Value, "timeout", 500, "Timeout for process/each-process")
 	flag.Parse()
 
 	helpers.BindAll()

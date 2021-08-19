@@ -1,22 +1,13 @@
 package gohack
 
-type MappedFlag struct {
-	Name     string
-	Value    interface{}
-	Assigned bool
-}
+import "time"
 
-var URL, Protocol, Timeout, Start, End, Port MappedFlag
-
-func (mp *MappedFlag) Bind(name string) {
-	mp.Name = name
-	mp.Assigned = true
-}
-
-func (mp *MappedFlag) Release() {
-	mp.Name = ""
-	mp.Assigned = false
-}
+var URL StrFlag = StrFlag{}
+var Protocol StrFlag = StrFlag{}
+var Timeout DurationFlag = DurationFlag{}
+var Start IntFlag = IntFlag{}
+var End IntFlag = IntFlag{}
+var Port IntFlag = IntFlag{}
 
 func BindAll() {
 	URL.Bind("url")
@@ -36,9 +27,75 @@ func ReleaseAll() {
 	Timeout.Release()
 }
 
-func MakeArgMap() {
-
+func MakeArgMap() map[string]string {
+    return map[string]string{}
 }
+
+
+type IntFlag struct {
+	Name     string
+    Value    int
+	Assigned bool
+}
+
+type StrFlag struct {
+	Name     string
+    Value    string
+	Assigned bool
+}
+
+type BoolFlag struct {
+	Name     string
+    Value    bool
+	Assigned bool
+}
+
+type DurationFlag struct {
+	Name     string
+    Value    time.Duration
+	Assigned bool
+}
+
+func (mp *IntFlag) Bind(name string) {
+	mp.Name = name
+	mp.Assigned = true
+}
+
+func (mp *IntFlag) Release() {
+	mp.Name = ""
+	mp.Assigned = false
+}
+
+func (mp *BoolFlag) Bind(name string) {
+	mp.Name = name
+	mp.Assigned = true
+}
+
+func (mp *BoolFlag) Release() {
+	mp.Name = ""
+	mp.Assigned = false
+}
+
+func (mp *StrFlag) Bind(name string) {
+	mp.Name = name
+	mp.Assigned = true
+}
+
+func (mp *StrFlag) Release() {
+	mp.Name = ""
+	mp.Assigned = false
+}
+
+func (mp *DurationFlag) Bind(name string) {
+	mp.Name = name
+	mp.Assigned = true
+}
+
+func (mp *DurationFlag) Release() {
+	mp.Name = ""
+	mp.Assigned = false
+}
+
 
 // var URL, Protocol string
 // var Timeout time.Duration

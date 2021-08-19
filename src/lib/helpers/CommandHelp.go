@@ -28,7 +28,7 @@ func CommandHelp(name string) {
 	var _stdout bytes.Buffer
 	var ct CommandTemplate = *ctp
 
-	aliasHelp := fmt.Sprintf("%s[*] Possible aliases for %s:%s\n\t%s", gohack.ColorYellow, ct.BinaryName, gohack.ColorReset, strings.Join(ct.Aliases, "  "))
+	aliasHelp := fmt.Sprintf("%s[*] Supported aliases for %s:%s\n\t%s", gohack.ColorYellow, ct.BinaryName, gohack.ColorReset, strings.Join(ct.Aliases, "  "))
 	toolPath := fmt.Sprintf("%s/%s", getConfig()["TOOLBINARIES"], ct.BinaryName)
 
 	cmd := exec.Command(toolPath, "-h")
@@ -55,7 +55,7 @@ func ShowCommands() {
 }
 
 func showOne(ct CommandTemplate) {
-	aliasHelp := fmt.Sprintf("%sPossible aliases for %s:\n\t%s %s", gohack.ColorYellow, ct.BinaryName, strings.Join(ct.Aliases, "  "), gohack.ColorReset)
+	aliasHelp := fmt.Sprintf("%s Supported aliases for %s:\n\t%s %s", gohack.ColorYellow, ct.BinaryName, strings.Join(ct.Aliases, "  "), gohack.ColorReset)
 	fmt.Printf("%sBinaryName: %s%s\n%s\n\n", gohack.ColorCyan, ct.BinaryName, gohack.ColorReset, aliasHelp)
 }
 
