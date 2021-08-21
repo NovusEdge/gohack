@@ -37,3 +37,6 @@ temp*
 
 # Ignoring __pycache__
 __pycache__/
+
+# Ignore .env
+*.env

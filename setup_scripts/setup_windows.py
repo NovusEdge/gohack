@@ -51,23 +51,27 @@ command = '''
 del src\\tool_bin\\*.* /f/s/q
 del src\\bin\\*.* /f/s/q
 '''
-subprocess.run(command, shell=True, capture_output=True)
+cleanup = subprocess.run(command, shell=True, capture_output=True)
 print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
 
-# Building all tools/commands in tool_bin as binaries.
 print(f"\n{YELLOW}[*] Building binaries for tools ...")
 TOOLS = os.listdir(f"{PATH}/src/commands")
 os.chdir("src/tool_bin")
 for tool in TOOLS:
     command = f"go build ../commands/{tool}"
-    subprocess.run(command, shell=True)
-
-print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
+    build = subprocess.run(command, shell=True)
+    print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
 
 
 # Building the main binary:
 print(f"\n{YELLOW}[*] Building the main binary ...")
 os.chdir("src/bin")
 command = "go build ../gohack.go"
-subprocess.run(command, shell=True)
+mainbin = subprocess.run(command, shell=True)
 print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
+
+errors = filter(lambda x: x.stderr != "", [mainbin, cleanup, build])
+
+if len(errors) > 0:
+    print(f"{RED}[!] E: Error during setting up, please check logs...{CLEAR}")
+    print(f"{YELLOW}[*] You can find the logs at: {PATH}/logs{CLEAR}\n")

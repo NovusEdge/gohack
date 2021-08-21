@@ -7,6 +7,7 @@ import (
 	"os"
 	"fmt"
 	"log"
+	"strings"
 )
 
 func main() {
@@ -28,8 +29,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("%s\n", _out)
-	fmt.Println("%s[!] E: %s%s\n", gohack.ColorRed, _err, gohack.ColorReset)
+	if !(isWhiteSpace(_out)) { fmt.Printf("%s\n", _out) }
+	if !(isWhiteSpace(_err)) { fmt.Printf("%s[!] E: %s%s\n", gohack.ColorRed, _err, gohack.ColorReset) }
 }
 
 func checkForHelp(args []string) bool {
@@ -55,4 +56,8 @@ func checkForHelp(args []string) bool {
 		}
 	}
 	return false
+}
+
+func isWhiteSpace(s string) bool {
+	return len(s) == 0 || strings.TrimSpace(s) == ""
 }

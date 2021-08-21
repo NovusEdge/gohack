@@ -58,13 +58,11 @@ __ERROR_LOGS_PATH = f"logs/setup_errors_{DATE}.log"
 if pathlib.Path(__ERROR_LOGS_PATH).exists():
     __ERROR_LOGS = open(__ERROR_LOGS_PATH, "a")
     __ERROR_LOGS.write(f"\nLog__{TIME}")
-    __ERROR_LOGS.write("\n" + "-"*80)
 
 # Changing pwd to parent-directory (of script) for the CLI.
 else:
     __ERROR_LOGS = open(__ERROR_LOGS_PATH, "w")
     __ERROR_LOGS.write(f"\nLog__{TIME}")
-    __ERROR_LOGS.write("\n" + "-"*80)
 
 
 # Creating a directory for binaries
@@ -87,35 +85,16 @@ if PLATFORM in 'linux Linux darwin Darwin':
     proc = subprocess.Popen(["python3", "setup_scripts/setup_linux.py"], stderr=__ERROR_LOGS)
     proc.communicate()
     proc.kill()
-    __ERROR_LOGS.write("\n" + "-"*80)
+    __ERROR_LOGS.write("\n" + "-"*80 + "\n")
 
 elif PLATFORM == 'win32':
     proc = subprocess.Popen(["python3", "setup_scripts/setup_windows.py"], stderr=__ERROR_LOGS)
     proc.communicate()
     proc.kill()
-    __ERROR_LOGS.write("\n" + "-"*80)
+    __ERROR_LOGS.write("\n" + "-"*80 + "\n")
 
 else:
     print(f"{RED}[-] Platform not Supported :({CLEAR}")
 
-
-__ENV_FILE  = open("src/.env", "w+")
-__ENV_FILE2 = open(".env", "w+")
-
-##### Environment Variables for the project ######
-INSTALLATIONPATH = str(PATH)
-TOOLBINARIES     = f"{PATH}/src/tool_bin"
-BINARIES         = f"{PATH}/src/bin"
-##################################################
-
-__ENV_FILE.write(f"INSTALLATIONPATH={INSTALLATIONPATH}\n")
-__ENV_FILE.write(f"TOOLBINARIES={TOOLBINARIES}\n")
-__ENV_FILE.write(f"BINARIES={BINARIES}\n")
-__ENV_FILE2.write(f"INSTALLATIONPATH={INSTALLATIONPATH}\n")
-__ENV_FILE2.write(f"TOOLBINARIES={TOOLBINARIES}\n")
-__ENV_FILE2.write(f"BINARIES={BINARIES}\n")
-
-
 # Closing opened files...
 __ERROR_LOGS.close()
-__ENV_FILE.close()

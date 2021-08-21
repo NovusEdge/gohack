@@ -6,11 +6,10 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"log"
+	"os"
 	"os/exec"
 	"reflect"
 
-	"github.com/joho/godotenv"
 )
 
 // CommandTemplate
@@ -71,8 +70,8 @@ func (c *Command) ExecuteCommand() (string, string, error) {
 		err := errors.New(gohack.ColorRed + "[!] E: Invalid command." + gohack.ColorReset)
 		return "", "", err
 	}
-	ENV := getConfig()
-	toolPath := fmt.Sprintf("%s/%s", ENV["TOOLBINARIES"], c.Template.BinaryName)
+	PATH := os.Getenv("GOHACKPATH")
+	toolPath := fmt.Sprintf("%s/src/tool_bin/%s", PATH, c.Template.BinaryName)
 	args := []string{}
 	args = append(args, c.Args...)
 
@@ -120,13 +119,4 @@ func checkAlias(template CommandTemplate, alias string) bool {
 		}
 	}
 	return false
-}
-
-// get the project env
-func getConfig() map[string]string {
-	ENV, err := godotenv.Read()
-	if err != nil {
-		log.Fatal(err)
-	}
-	return ENV
 }
