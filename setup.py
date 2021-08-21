@@ -78,7 +78,6 @@ if not pathlib.Path("src/tool_bin/").exists():
 # Fetching sys env
 ENV       = os.environ
 PLATFORM  = platform.system()
-print(PLATFORM)
 
 # TODO: Figure out a way to do this quietly...
 # get_proc = subprocess.call("go get", stderr=__ERROR_LOGS, stdout=sys.stdout, env=ENV)
@@ -100,7 +99,8 @@ else:
     print(f"{RED}[-] Platform not Supported :({CLEAR}")
 
 
-__ENV_FILE = open("src/.env", "w+")
+__ENV_FILE  = open("src/.env", "w+")
+__ENV_FILE2 = open(".env", "w+")
 
 ##### Environment Variables for the project ######
 INSTALLATIONPATH = str(PATH)
@@ -111,6 +111,9 @@ BINARIES         = f"{PATH}/src/bin"
 __ENV_FILE.write(f"INSTALLATIONPATH={INSTALLATIONPATH}\n")
 __ENV_FILE.write(f"TOOLBINARIES={TOOLBINARIES}\n")
 __ENV_FILE.write(f"BINARIES={BINARIES}\n")
+__ENV_FILE2.write(f"INSTALLATIONPATH={INSTALLATIONPATH}\n")
+__ENV_FILE2.write(f"TOOLBINARIES={TOOLBINARIES}\n")
+__ENV_FILE2.write(f"BINARIES={BINARIES}\n")
 
 
 # Closing opened files...
