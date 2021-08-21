@@ -70,7 +70,7 @@ command = "go build ../gohack.go"
 mainbin = subprocess.run(command, shell=True)
 print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
 
-errors = filter(lambda x: x.stderr != "", [mainbin, cleanup, build])
+errors = list(filter(lambda x: x.stderr != "", [mainbin, cleanup, build]))
 
 if len(errors) > 0:
     print(f"{RED}[!] E: Error during setting up, please check logs...{CLEAR}")

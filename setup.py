@@ -73,14 +73,8 @@ if not pathlib.Path("src/tool_bin/").exists():
     os.mkdir("src/tool_bin")
 
 
-# Fetching sys env
-ENV       = os.environ
+
 PLATFORM  = platform.system()
-
-# TODO: Figure out a way to do this quietly...
-# get_proc = subprocess.call("go get", stderr=__ERROR_LOGS, stdout=sys.stdout, env=ENV)
-
-
 if PLATFORM in 'linux Linux darwin Darwin':
     proc = subprocess.Popen(["python3", "setup_scripts/setup_linux.py"], stderr=__ERROR_LOGS)
     proc.communicate()
@@ -95,6 +89,11 @@ elif PLATFORM == 'win32':
 
 else:
     print(f"{RED}[-] Platform not Supported :({CLEAR}")
+
+# Filling in .env for the setup
+__ENV_FILE = open("src/.env", "w+")
+__ENV_FILE.write(f"GOHACKPATH={PATH}")
+
 
 # Closing opened files...
 __ERROR_LOGS.close()

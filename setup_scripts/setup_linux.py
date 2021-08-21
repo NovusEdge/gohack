@@ -50,7 +50,7 @@ command = '''
 rm src/tool_bin/*
 rm src/bin/*
 '''
-cleanup = subprocess.run(command, shell=True, capture_output=True)
+subprocess.run(command, shell=True, capture_output=True)
 print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
 
 
@@ -60,7 +60,7 @@ TOOLS = os.listdir(f"{PATH}/src/commands")
 os.chdir("src/tool_bin")
 for tool in TOOLS:
     command = f"go build ../commands/{tool}"
-    build = subprocess.run(command, shell=True)
+    subprocess.run(command, shell=True)
 print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
 
 
@@ -68,11 +68,9 @@ print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
 print(f"\n{YELLOW}[*] Building the main binary ...")
 os.chdir("src/bin")
 command = "go build ../gohack.go"
-mainbin = subprocess.run(command, shell=True)
-print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
+subprocess.run(command, shell=True)
+print(f"{CYAN}[~] Done!{CLEAR}\n"); os.chdir(PATH)
 
 
-errors = filter(lambda x: x.stderr != "", [mainbin, cleanup, build])
-if len(errors) > 0:
-    print(f"{RED}[!] E: Error during setting up, please check logs...{CLEAR}")
-    print(f"{YELLOW}[*] You can find the logs at: {PATH}/logs{CLEAR}\n")
+print(f"{CYAN}[~] To check for any errors during setting up, please check logs...{CLEAR}")
+print(f"{YELLOW}[*] You can find the logs at: {PATH}/logs/{CLEAR}\n")
