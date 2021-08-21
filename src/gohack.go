@@ -2,23 +2,37 @@ package main
 
 import (
 	helpers "gohack/lib/helpers"
+	gohack "gohack/lib"
 
 	"os"
+	"fmt"
+	"log"
 )
 
 func main() {
-	args := os.Args[1:]
+	args := os.Args[1:] // Omitting the file_path
 	if checkForHelp(args) {
 		os.Exit(0)
 	}
+
+	command := helpers.MakeCommand(args[0], args[1:])
+	_out, _err, err := command.ExecuteCommand()
+
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+
+	fmt.Printf("%s\n", _out)
+	fmt.Println("%s[!] E: %s%s\n", gohack.ColorRed, _err, gohack.ColorReset)
 }
 
 func checkForHelp(args []string) bool {
 	if len(args) == 0 {
-		helpers.ShowCommands() // :'D
+		helpers.ShowCommands()
 		return true
 	}
-	if args[0] == "help" {
+	if args[0] == "help" || args[0] == "-h" || args[0] == "--help" {
 		if len(args) == 1 {
 			helpers.ShowCommands()
 			return true
@@ -26,6 +40,14 @@ func checkForHelp(args []string) bool {
 		tool := args[1]
 		helpers.CommandHelp(tool)
 		return true
+	}
+
+	if len(args) == 1 {
+		ok, _ := helpers.FindTemplate(args[0])
+		if ok != nil {
+			helpers.CommandHelp(args[0])
+			return true
+		}
 	}
 	return false
 }

@@ -12,7 +12,7 @@ import (
 
  */
 type PortScanner struct {
-	URL      string
+	Domain   string
 	Protocol string
 }
 
@@ -24,13 +24,13 @@ func (ps *PortScanner) Scan(lower int, upper int, timeout time.Duration) {
 		wg.Add(1)
 		go func(j int) {
 			defer wg.Done()
-			address := fmt.Sprintf("%s:%d", ps.URL, j)
+			address := fmt.Sprintf("%s:%d", ps.Domain, j)
 			conn, err := net.DialTimeout(ps.Protocol, address, timeout)
 			if err != nil {
 				return
 			}
 			conn.Close()
-			fmt.Printf("%s[+] Port %d is Open.\n", ColorGreen, j)
+			fmt.Printf("%s[+] Port %d is Open.%s\n", ColorGreen, j, ColorReset)
 		}(i)
 	}
 	wg.Wait()

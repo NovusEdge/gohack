@@ -17,7 +17,7 @@ import (
 Use in the help binary
 */
 func CommandHelp(name string) {
-	ctp, err := findTemplate(name)
+	ctp, err := FindTemplate(name)
 	if err != nil {
 		fmt.Println(err, "\n")
 		fmt.Println("--------------------------------------")
@@ -59,7 +59,7 @@ func showOne(ct CommandTemplate) {
 	fmt.Printf("%sBinaryName: %s%s\n%s\n\n", gohack.ColorCyan, ct.BinaryName, gohack.ColorReset, aliasHelp)
 }
 
-func findTemplate(name string) (*CommandTemplate, error) {
+func FindTemplate(name string) (*CommandTemplate, error) {
 	for _, template := range COMMANDS {
 		if name == template.BinaryName || containsString(template.Aliases, name) {
 			return &template, nil

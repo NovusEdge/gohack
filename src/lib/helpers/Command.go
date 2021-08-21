@@ -9,7 +9,6 @@ import (
 	"log"
 	"os/exec"
 	"reflect"
-	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -37,7 +36,7 @@ Fields:
 	Template CommandTemplate
 */
 type Command struct {
-	Args     map[string]string
+	Args     []string
 	Template CommandTemplate
 }
 
@@ -45,13 +44,12 @@ type Command struct {
 /*
 
  */
-func MakeCommand(commandName string, args map[string]string) *Command {
+func MakeCommand(commandName string, args []string) *Command {
 	for _, template := range COMMANDS {
 		if checkAlias(template, commandName) {
 			return &Command{Args: args, Template: template}
 		}
 	}
-	log.Fatal("Incorrect command :P")
 	return nil
 }
 
@@ -74,12 +72,9 @@ func (c *Command) ExecuteCommand() (string, string, error) {
 		return "", "", err
 	}
 	ENV := getConfig()
-	argString := makeArgsString(c.Args)
 	toolPath := fmt.Sprintf("%s/%s", ENV["TOOLBINARIES"], c.Template.BinaryName)
 	args := []string{}
-	args = append(args, strings.Split(argString, " ")...)
-
-	fmt.Println(args)
+	args = append(args, c.Args...)
 
 	cmd := exec.Command(toolPath, args...)
 
@@ -94,12 +89,6 @@ func (c *Command) ExecuteCommand() (string, string, error) {
 	return _stdout.String(), _stderr.String(), nil
 }
 
-func makeArgsString(args map[string]string) (res string) {
-	for k, v := range args {
-		res += fmt.Sprintf("-%s=\"%s\" ", k, v)
-	}
-	return
-}
 
 func containsString(array []string, key string) bool {
 	for _, i := range array {
@@ -126,8 +115,8 @@ func checkAlias(template CommandTemplate, alias string) bool {
 		return true
 	}
 	for _, a := range template.Aliases {
-		return true
 		if a == alias {
+			return true
 		}
 	}
 	return false

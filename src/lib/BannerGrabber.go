@@ -17,14 +17,14 @@ type BannerGrabber struct {
 
 //Grab ...
 func (bg *BannerGrabber) Grab() {
-	fmt.Printf("%s[*] Grabbing banner for: %s...\n", ColorYellow, bg.URL)
+	fmt.Printf("%s[*] Grabbing banner for: %s...\n%s", ColorYellow, bg.URL, ColorReset)
 
 	res, err := _blindGrabHTTP(bg.URL)
 
 	if err != nil {
-		fmt.Printf("%s[-] E: %s\n", ColorRed, err)
+		fmt.Printf("%s[-] E: %s%s\n", ColorRed, err, ColorReset)
 	} else {
-		fmt.Printf("%s[*] Banner Grab Successful!%s\nBanner:\n%s%s", ColorYellow, ColorReset, ColorGreen, res)
+		fmt.Printf("%s[*] Banner Grab Successful!%s\nBanner:\n%s%s%s", ColorYellow, ColorReset, ColorGreen, res, ColorReset)
 	}
 
 }
