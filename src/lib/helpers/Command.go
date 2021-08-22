@@ -153,5 +153,6 @@ func GetEnv() map[string]string {
 		e := strings.Split(vars[i], "=")
 		ENV[e[0]] = e[1]
 	}
+	
 	return ENV
 }
