@@ -9,7 +9,7 @@ import (
 
 func SetEnv() {
 	fmt.Printf("%sSetting Gohack Environment...%s\n", "\033[1;30m", "\033[0m")
-	err := godotenv.Load()
+	err := godotenv.Load("./.env")
 	if err != nil {
 		log.Fatal(err)
 	}
