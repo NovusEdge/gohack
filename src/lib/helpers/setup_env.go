@@ -1,4 +1,4 @@
-package main
+package gohack
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func main() {
+func SetEnv() {
 	fmt.Printf("%sSetting Gohack Environment...%s\n", "\033[1;30m", "\033[0m")
 	err := godotenv.Load()
 	if err != nil {

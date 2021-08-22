@@ -16,6 +16,11 @@ func main() {
 		os.Exit(0)
 	}
 
+	if args[0] == "setenv" {
+		helpers.SetEnv()
+		os.Exit(0)
+	}
+
 	command := helpers.MakeCommand(args[0], args[1:])
 	if command == nil {
 		fmt.Printf("%s[!] Invalid command: \"%s\"%s\n", gohack.ColorRed, args[0], gohack.ColorReset)
