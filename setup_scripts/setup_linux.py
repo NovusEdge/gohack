@@ -33,9 +33,8 @@ PATH = pathlib.Path(__file__).parent.parent.absolute()
 os.chdir(PATH)
 
 # Installing dependencies
-print(f"\n{YELLOW}[*] Installing golang and python dependencies ...{CLEAR}")
-command = '''pip install -r requirements.txt
-cd src/
+print(f"\n{YELLOW}[*] Installing golang dependencies ...{CLEAR}")
+command = '''cd src/
 go clean
 go get
 cd ..

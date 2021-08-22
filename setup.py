@@ -19,16 +19,6 @@ import pathlib
 import sys
 import os
 
-from colorama import Fore, Style
-
-# Colors!
-RED     = Fore.RED
-YELLOW  = Fore.YELLOW
-GREEN   = Fore.GREEN
-MAGENTA = Fore.MAGENTA
-CYAN    = Fore.CYAN
-WHITE   = Fore.WHITE
-CLEAR   = Style.RESET_ALL
 
 
 ##################################################
@@ -41,6 +31,28 @@ CLEAR   = Style.RESET_ALL
 
 PATH = pathlib.Path(__file__).parent.absolute()
 os.chdir(PATH)
+
+
+if platform.system() in 'linux Linux darwin Darwin':
+    print("\033[33m [*] Installing python dependencies... \033[0m")
+    os.system("pip install -r requirements.txt")
+
+if platform.system() in 'win32 Win32 windows Windows':
+    print("\033[33m [*] Installing python dependencies... \033[0m")
+    os.system("py -m pip install -r requirements.txt")
+
+
+
+from colorama import Fore, Style
+
+# Colors!
+RED     = Fore.RED
+YELLOW  = Fore.YELLOW
+GREEN   = Fore.GREEN
+MAGENTA = Fore.MAGENTA
+CYAN    = Fore.CYAN
+WHITE   = Fore.WHITE
+CLEAR   = Style.RESET_ALL
 
 
 # Creating a directory for logs:
@@ -93,6 +105,8 @@ else:
 # Filling in .env for the setup
 __ENV_FILE = open("src/.env", "w+")
 __ENV_FILE.write(f"GOHACKPATH={PATH}")
+
+print(f"{CYAN}[~] Run: \"cd src/ && go run gohack setenv\" to set the environment variable for the project.{CLEAR}\n")
 
 
 # Closing opened files...
