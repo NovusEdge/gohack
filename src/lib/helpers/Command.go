@@ -6,9 +6,14 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"os"
 	"os/exec"
+	"os"
 	"reflect"
+	"runtime"
+	"strings"
+	"io/ioutil"
+	"log"
+
 )
 
 // CommandTemplate
@@ -69,8 +74,11 @@ func (c *Command) ExecuteCommand() (string, string, error) {
 		err := errors.New(gohack.ColorRed + "[!] E: Invalid command." + gohack.ColorReset)
 		return "", "", err
 	}
-	PATH := os.Getenv("GOHACKPATH")
-	toolPath := fmt.Sprintf("%s/src/tool_bin/%s", PATH, c.Template.BinaryName)
+
+	TOOLS := GetEnv()["TOOLBINARIES"]
+	fmt.Println(TOOLS)
+
+	toolPath := fmt.Sprintf("%s/%s", TOOLS, c.Template.BinaryName)
 	args := []string{}
 	args = append(args, c.Args...)
 
@@ -117,4 +125,33 @@ func checkAlias(template CommandTemplate, alias string) bool {
 		}
 	}
 	return false
+}
+
+func GetEnv() map[string]string {
+	system := runtime.GOOS
+	var home string
+
+	if system == "windows" {
+		home = os.Getenv("homepath")
+	} else if system == "darwin" || system == "linux" {
+		home = os.Getenv("HOME")
+	} else {
+		home = os.Getenv("HOME")
+	}
+
+	var ENV = make(map[string]string)
+	envFile := home + "/.config/gohack"
+
+	env, err := ioutil.ReadFile(envFile)
+	if err != nil{
+		log.Fatal(err)
+		os.Exit(1)
+	}
+	vars := strings.Split(string(env), "\n")
+
+	for i := 0; i < len(vars); i++ {
+		e := strings.Split(vars[i], "=")
+		ENV[e[0]] = e[1]
+	}
+	return ENV
 }

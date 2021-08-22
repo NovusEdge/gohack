@@ -65,12 +65,23 @@ for tool in TOOLS:
 # Building the main binary:
 print(f"\n{YELLOW}[*] Building the main binary ...")
 os.chdir("src/bin")
-command = "go build ../gohack.go"
+command = "go build ../main/gohack.go"
 mainbin = subprocess.run(command, shell=True)
 print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
 
-errors = list(filter(lambda x: x.stderr != "", [mainbin, cleanup, build]))
 
-if len(errors) > 0:
-    print(f"{RED}[!] E: Error during setting up, please check logs...{CLEAR}")
-    print(f"{YELLOW}[*] You can find the logs at: {PATH}\\logs{CLEAR}\n")
+print("\033[1;30m Setting Gohack Environment...\033[0m")
+home = os.environ["homepath"]
+if not pathlib.Path(f"{home}/.config").exists():
+    os.chdir(f"{home}/.config")
+
+    with open(f"{home}/.config/gohack", "w+") as f:
+        f.write(f"GOACKPATH={PATH}\n")
+        f.write(f"BINARIES={PATH}/src/bin\n")
+        f.write(f"TOOLBINARIES={PATH}/src/tool_bin\n")
+
+print("\033[36m[~] Done!\033[0m\n")
+
+
+print(f"{CYAN}[~] To check for any errors during setting up, please check logs...{CLEAR}")
+print(f"{YELLOW}[*] You can find the logs at: {PATH}/logs/{CLEAR}\n")

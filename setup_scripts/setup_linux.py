@@ -34,7 +34,7 @@ os.chdir(PATH)
 
 # Installing dependencies
 print(f"\n{YELLOW}[*] Installing golang dependencies ...{CLEAR}")
-command = '''cd src/
+command = '''cd src/main
 go clean
 go get
 cd ..
@@ -66,9 +66,23 @@ print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
 # Building the main binary:
 print(f"\n{YELLOW}[*] Building the main binary ...")
 os.chdir("src/bin")
-command = "go build ../gohack.go"
+command = "go build ../main/gohack.go"
 subprocess.run(command, shell=True)
 print(f"{CYAN}[~] Done!{CLEAR}\n"); os.chdir(PATH)
+
+print("\033[1;30m Setting Gohack Environment...\033[0m")
+home = os.environ["HOME"]
+
+
+if not pathlib.Path(f"{home}/.config").exists():
+    os.chdir(f"{home}/.config")
+
+with open(f"{home}/.config/gohack", "w+") as f:
+    f.write(f"GOACKPATH={PATH}\n")
+    f.write(f"BINARIES={PATH}/src/bin\n")
+    f.write(f"TOOLBINARIES={PATH}/src/tool_bin")
+
+print("\033[36m[~] Done!\033[0m\n")
 
 
 print(f"{CYAN}[~] To check for any errors during setting up, please check logs...{CLEAR}")

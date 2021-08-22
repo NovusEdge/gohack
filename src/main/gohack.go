@@ -3,7 +3,6 @@ package main
 import (
 	gohack "gohack/lib"
 	helpers "gohack/lib/helpers"
-	"github.com/joho/godotenv"
 
 	"fmt"
 	"log"
@@ -18,22 +17,13 @@ func main() {
 		os.Exit(0)
 	}
 
-	if args[0] == "setenv" {
-		fmt.Printf("%sSetting Gohack Environment...%s\n", "\033[1;30m", "\033[0m")
-		err := godotenv.Load()
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Printf("%s[~] Done! %s\n", "\033[36m", "\033[0m")
-		os.Exit(0)
-	}
-
 	command := helpers.MakeCommand(args[0], args[1:])
 	if command == nil {
 		fmt.Printf("%s[!] Invalid command: \"%s\"%s\n", gohack.ColorRed, args[0], gohack.ColorReset)
 		helpers.ShowCommands()
 		os.Exit(0)
 	}
+    
 	_out, _err, err := command.ExecuteCommand()
 
 	if err != nil {

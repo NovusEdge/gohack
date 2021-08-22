@@ -101,13 +101,7 @@ elif PLATFORM in 'win32 Win32 windows Windows':
 
 else:
     print(f"{RED}[-] Platform not Supported :({CLEAR}")
-
-# Filling in .env for the setup
-__ENV_FILE = open("src/.env", "w+")
-__ENV_FILE.write(f"GOHACKPATH={PATH}")
-
-print(f"{CYAN}[~] Run: \"cd src/ && go run gohack setenv\" to set the environment variable for the project.{CLEAR}\n")
-
+    
 
 # Closing opened files...
 __ERROR_LOGS.close()

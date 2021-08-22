@@ -27,11 +27,11 @@ func CommandHelp(name string) {
 
 	var _stdout bytes.Buffer
 	var ct CommandTemplate = *ctp
-	PATH := os.Getenv("GOHACKPATH")
+	PATH := GetEnv()["TOOLBINARIES"]
 
 	fmt.Printf("%s[*]Usage:%s\n\tgohack %s [args...]\n\n", gohack.ColorYellow, gohack.ColorReset, ct.BinaryName)
 	aliasHelp := fmt.Sprintf("%s[*] Supported aliases for %s:%s\n\t%s", gohack.ColorYellow, ct.BinaryName, gohack.ColorReset, strings.Join(ct.Aliases, "  "))
-	toolPath := fmt.Sprintf("%s/src/tool_bin/%s", PATH, ct.BinaryName)
+	toolPath := fmt.Sprintf("%s/%s", PATH, ct.BinaryName)
 
 	cmd := exec.Command(toolPath, "-h")
 
