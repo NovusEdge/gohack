@@ -29,6 +29,7 @@ func CommandHelp(name string) {
 	var ct CommandTemplate = *ctp
 	PATH := os.Getenv("GOHACKPATH")
 
+	fmt.Printf("%s[*]Usage:%s\n\tgohack %s [args...]\n\n", gohack.ColorYellow, gohack.ColorReset, ct.BinaryName)
 	aliasHelp := fmt.Sprintf("%s[*] Supported aliases for %s:%s\n\t%s", gohack.ColorYellow, ct.BinaryName, gohack.ColorReset, strings.Join(ct.Aliases, "  "))
 	toolPath := fmt.Sprintf("%s/src/tool_bin/%s", PATH, ct.BinaryName)
 
@@ -44,15 +45,17 @@ func CommandHelp(name string) {
 	helpString := _stdout.String()
 
 	temp := strings.Split(helpString, "\n")[1:]
-	fmt.Printf("%s[*] Usage of %s:%s\n", gohack.ColorYellow, ct.BinaryName, gohack.ColorReset)
+	fmt.Printf("%s[*] Arguments for %s:%s\n", gohack.ColorYellow, ct.BinaryName, gohack.ColorReset)
 	fmt.Println(gohack.ColorCyan, strings.Join(temp, "\n"), gohack.ColorReset)
 }
 
 func ShowCommands() {
-	fmt.Printf("%s[~] List of tools and their aliases:\n\n", gohack.ColorPurple)
+	fmt.Printf("\033[1;33m[*] Usage:\033[0m\n\t%sgohack [tool-name/alias] arguments...%s\n\n", gohack.ColorCyan, gohack.ColorReset)
+	fmt.Printf("\033[1m%s[~] List of tools and their aliases:%s\n\n", gohack.ColorPurple, gohack.ColorReset)
 	for _, template := range COMMANDS {
 		showOne(template)
 	}
+	fmt.Printf("%s[*] Use \"gohack help <tool-name/alias>\" for more information about a tool and it's usage.%s\n", gohack.ColorCyan, gohack.ColorReset)
 }
 
 func showOne(ct CommandTemplate) {

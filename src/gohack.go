@@ -38,6 +38,14 @@ func checkForHelp(args []string) bool {
 		helpers.ShowCommands()
 		return true
 	}
+
+	if len(args) > 1 {
+		if args[1] == "-h" || args[1] == "--help" {
+			helpers.CommandHelp(args[0])
+			return true
+		}
+	}
+
 	if args[0] == "help" || args[0] == "-h" || args[0] == "--help" {
 		if len(args) == 1 {
 			helpers.ShowCommands()
