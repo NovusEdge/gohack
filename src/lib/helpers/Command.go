@@ -9,7 +9,6 @@ import (
 	"os"
 	"os/exec"
 	"reflect"
-
 )
 
 // CommandTemplate
@@ -87,7 +86,6 @@ func (c *Command) ExecuteCommand() (string, string, error) {
 
 	return _stdout.String(), _stderr.String(), nil
 }
-
 
 func containsString(array []string, key string) bool {
 	for _, i := range array {

@@ -1,12 +1,12 @@
 package gohack
 
 import (
-    "regexp"
-    "log"
-    "strings"
+	"log"
+	"regexp"
+	"strings"
 )
 
-func ParseArgs(args []string) (matches []string){
+func ParseArgs(args []string) (matches []string) {
 	re, err := regexp.Compile(`[\/-]?((\w+)(?:[=:]("[^"]+"|[^\s"]+))?)(?:\s+|$)`)
 	if err != nil {
 		log.Fatal(err)
@@ -19,16 +19,16 @@ func ParseArgs(args []string) (matches []string){
 			matches = append(matches, elem)
 		}
 	}
-    return
+	return
 }
 
 func MakeArgMap(args []string) map[string]string {
-    res := make(map[string]string)
+	res := make(map[string]string)
 
-    for _, arg := range args {
-        temp := strings.SplitN(arg, "=", 2)
-        res[temp[0]] = temp[1]
-    }
+	for _, arg := range args {
+		temp := strings.SplitN(arg, "=", 2)
+		res[temp[0]] = temp[1]
+	}
 
-    return res
+	return res
 }

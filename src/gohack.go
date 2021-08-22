@@ -1,12 +1,12 @@
 package main
 
 import (
-	helpers "gohack/lib/helpers"
 	gohack "gohack/lib"
+	helpers "gohack/lib/helpers"
 
-	"os"
 	"fmt"
 	"log"
+	"os"
 	"strings"
 )
 
@@ -29,8 +29,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	if !(isWhiteSpace(_out)) { fmt.Printf("%s\n", _out) }
-	if !(isWhiteSpace(_err)) { fmt.Printf("%s[!] E: %s%s\n", gohack.ColorRed, _err, gohack.ColorReset) }
+	if !(isWhiteSpace(_out)) {
+		fmt.Printf("%s\n", _out)
+	}
+	if !(isWhiteSpace(_err)) {
+		fmt.Printf("%s[!] E: %s%s\n", gohack.ColorRed, _err, gohack.ColorReset)
+	}
 }
 
 func checkForHelp(args []string) bool {

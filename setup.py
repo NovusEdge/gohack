@@ -81,7 +81,7 @@ if PLATFORM in 'linux Linux darwin Darwin':
     proc.kill()
     __ERROR_LOGS.write("\n" + "-"*80 + "\n")
 
-elif PLATFORM == 'win32':
+elif PLATFORM in 'win32 Win32 windows Windows':
     proc = subprocess.Popen(["python3", "setup_scripts/setup_windows.py"], stderr=__ERROR_LOGS)
     proc.communicate()
     proc.kill()
@@ -91,7 +91,7 @@ else:
     print(f"{RED}[-] Platform not Supported :({CLEAR}")
 
 # Filling in .env for the setup
-__ENV_FILE = open("src/.env", "w+")
+__ENV_FILE = open(".env", "w+")
 __ENV_FILE.write(f"GOHACKPATH={PATH}")
 
 

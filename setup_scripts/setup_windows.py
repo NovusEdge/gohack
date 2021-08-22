@@ -36,7 +36,7 @@ os.chdir(PATH)
 # Installing dependencies
 print(f"\n{YELLOW}[*] Installing golang and python dependencies ...{CLEAR}")
 command = '''py -m pip install -r requirements.txt
-cd src/
+cd ./src/
 go clean
 go get
 cd ..
@@ -74,4 +74,4 @@ errors = list(filter(lambda x: x.stderr != "", [mainbin, cleanup, build]))
 
 if len(errors) > 0:
     print(f"{RED}[!] E: Error during setting up, please check logs...{CLEAR}")
-    print(f"{YELLOW}[*] You can find the logs at: {PATH}/logs{CLEAR}\n")
+    print(f"{YELLOW}[*] You can find the logs at: {PATH}\\logs{CLEAR}\n")
