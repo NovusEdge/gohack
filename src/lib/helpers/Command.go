@@ -49,7 +49,7 @@ type Command struct {
  */
 func MakeCommand(commandName string, args []string) *Command {
 	for _, template := range COMMANDS {
-		if checkAlias(template, commandName) {
+		if CheckAlias(template, commandName) {
 			return &Command{Args: args, Template: template}
 		}
 	}
@@ -71,12 +71,11 @@ func (c *Command) ExecuteCommand() (string, string, error) {
 	templateCheck := checkTemplate(c.Template)
 
 	if !(templateCheck) {
-		err := errors.New(gohack.ColorRed + "[!] E: Invalid command." + gohack.ColorReset)
+		err := errors.New(gohack.ColorRed + "[!] E: Command Unavailable." + gohack.ColorReset)
 		return "", "", err
 	}
 
 	TOOLS := GetEnv()["TOOLBINARIES"]
-	fmt.Println(TOOLS)
 
 	toolPath := fmt.Sprintf("%s/%s", TOOLS, c.Template.BinaryName)
 	args := []string{}
@@ -115,7 +114,7 @@ func checkTemplate(key CommandTemplate) bool {
 }
 
 // check the [alias] for one matching in [template]
-func checkAlias(template CommandTemplate, alias string) bool {
+func CheckAlias(template CommandTemplate, alias string) bool {
 	if alias == template.BinaryName {
 		return true
 	}
@@ -153,6 +152,6 @@ func GetEnv() map[string]string {
 		e := strings.Split(vars[i], "=")
 		ENV[e[0]] = e[1]
 	}
-	
+
 	return ENV
 }

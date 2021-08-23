@@ -35,11 +35,10 @@ os.chdir(PATH)
 
 # Installing dependencies
 print(f"\n{YELLOW}[*] Installing golang dependencies ...{CLEAR}")
-command = '''cd ./src/
-go clean
+command = '''go clean
 go get
-cd ..
 '''
+os.chdir("src")
 subprocess.run(command, shell=True)
 print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
 
@@ -51,7 +50,7 @@ del src\\tool_bin\\*.* /f/s/q
 del src\\bin\\*.* /f/s/q
 '''
 cleanup = subprocess.run(command, shell=True, capture_output=True)
-print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
+print(f"{CYAN}[~] Done!{CLEAR}")
 
 print(f"\n{YELLOW}[*] Building binaries for tools ...")
 TOOLS = os.listdir(f"{PATH}/src/commands")
@@ -65,7 +64,7 @@ for tool in TOOLS:
 # Building the main binary:
 print(f"\n{YELLOW}[*] Building the main binary ...")
 os.chdir("src/bin")
-command = "go build ../main/gohack.go"
+command = "go build ../gohack.go"
 mainbin = subprocess.run(command, shell=True)
 print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
 
@@ -76,9 +75,9 @@ if not pathlib.Path(f"{home}/.config").exists():
     os.chdir(f"{home}/.config")
 
     with open(f"{home}/.config/gohack", "w+") as f:
-        f.write(f"GOACKPATH={PATH}\n")
+        f.write(f"GOHACKPATH={PATH}\n")
         f.write(f"BINARIES={PATH}/src/bin\n")
-        f.write(f"TOOLBINARIES={PATH}/src/tool_bin\n")
+        f.write(f"TOOLBINARIES={PATH}/src/tool_bin")
 
 print("\033[36m[~] Done!\033[0m\n")
 

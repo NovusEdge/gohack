@@ -15,4 +15,10 @@ var COMMANDS []CommandTemplate = []CommandTemplate{
 		BinaryName:   "bannerGrabber",
 		IsFunctional: true,
 	},
+
+	CommandTemplate{
+		Aliases:      []string{"doc", "doctor", "DOCTOR", "Doctor"},
+		BinaryName: "doctor",
+		IsFunctional: true,
+	},
 }
