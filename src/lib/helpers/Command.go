@@ -29,6 +29,7 @@ Fields:
 type CommandTemplate struct {
 	Aliases      []string
 	BinaryName   string
+	Discription  string
 	IsFunctional bool
 }
 
