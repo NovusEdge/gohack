@@ -72,7 +72,7 @@ print(f"{CYAN}[~] Done!{CLEAR}"); os.chdir(PATH)
 print("\033[1;30m Setting Gohack Environment...\033[0m")
 home = os.environ["homepath"]
 if not pathlib.Path(f"{home}/.config").exists():
-    os.chdir(f"{home}/.config")
+    os.mkdir(f"{home}/.config")
 
     with open(f"{home}/.config/gohack", "w+") as f:
         f.write(f"GOHACKPATH={PATH}\n")

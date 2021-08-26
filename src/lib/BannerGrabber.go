@@ -56,7 +56,7 @@ func _blindGrabHTTP(address string) (res string, err error) {
 }
 
 func _curlGrab(cURL string, address string) (res string, err error) {
-	fmt.Printf("%s[*] Using cURL to perform the grab.\n", ColorYellow)
+	fmt.Printf("%s[*] Using cURL to perform the grab%.\n", ColorYellow, ColorReset)
 
 	curlCommand := exec.Command(cURL, "-s", "-I", address)
 
@@ -80,7 +80,7 @@ func _curlGrab(cURL string, address string) (res string, err error) {
 }
 
 func _wgetGrab(wGET string, address string) (res string, err error) {
-	fmt.Printf("%s[*] Using wGET to perform the grab.\n", ColorYellow)
+	fmt.Printf("%s[*] Using wGET to perform the grab%s.\n", ColorYellow, ColorReset)
 
 	wgetCommand := exec.Command(wGET, "-q", "-S", address)
 

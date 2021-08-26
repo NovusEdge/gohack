@@ -74,7 +74,7 @@ home = os.environ["HOME"]
 
 
 if not pathlib.Path(f"{home}/.config").exists():
-    os.chdir(f"{home}/.config")
+    os.mkdir(f"{home}/.config")
 
 with open(f"{home}/.config/gohack", "w+") as f:
     f.write(f"GOHACKPATH={PATH}\n")
