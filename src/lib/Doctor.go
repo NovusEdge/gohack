@@ -14,7 +14,6 @@ import (
 
 func RebuildAll() {
     root := getEnv()["GOHACKPATH"] + "/src/commands"
-	fmt.Println(root)
 	fileInfo, err := ioutil.ReadDir(root)
 	if err != nil {
 		fmt.Printf("%s[!] E: %s%s\n\n", ColorRed, err, ColorReset)

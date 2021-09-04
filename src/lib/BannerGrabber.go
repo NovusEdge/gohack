@@ -9,8 +9,8 @@ import (
 
 //BannerGrabber : A banner grabber
 /*
-
- */
+	URL [string]
+*/
 type BannerGrabber struct {
 	URL string
 }

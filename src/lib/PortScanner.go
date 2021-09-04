@@ -9,8 +9,9 @@ import (
 
 //PortScanner : A port scanner
 /*
-
- */
+	Domain   [string]
+	Protocol [string]
+*/
 type PortScanner struct {
 	Domain   string
 	Protocol string
