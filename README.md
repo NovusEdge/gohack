@@ -11,7 +11,7 @@
 
 ***
 
-#### Installation:
+#### Installation
 
 For the installation guide, refer to the wiki's [installation section](https://github.com/NovusEdge/gohack/wiki#installation)
 
@@ -19,7 +19,7 @@ For the installation guide, refer to the wiki's [installation section](https://g
 
 ***
 
-#### License:
+#### License
     MIT License
 
     Copyright (c) 2021 NovusEdge
@@ -41,3 +41,11 @@ For the installation guide, refer to the wiki's [installation section](https://g
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
+
+
+***
+
+#### _:exclamation: Warning :exclamation:_
+Please type responsibly. Any and all malicious activities (if any) that make use of this project are not the responsibility of the project owner.
+
+**:zap: Ignore at your own risk!**
