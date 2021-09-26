@@ -2,7 +2,7 @@ package main
 
 import (
 	gohack "gohack/lib"
-	helpers "gohack/lib/helpers"
+	helpers "gohack/lib/utilities/General"
 
 	"fmt"
 	"log"
@@ -23,7 +23,7 @@ func main() {
 		helpers.ShowCommands()
 		os.Exit(0)
 	}
-    
+
 	_out, _err, err := command.ExecuteCommand()
 
 	if err != nil {

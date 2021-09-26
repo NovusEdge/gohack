@@ -7,7 +7,7 @@ import (
     "os"
 
     src "gohack/lib"
-    helpers "gohack/lib/helpers"
+    helpers "gohack/lib/utilities/General"
 )
 
 func main() {

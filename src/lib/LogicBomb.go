@@ -10,13 +10,13 @@ const (
 )
 
 type LogicBomb struct {
-	ID        string
-	GoesOffOn *time.Time
-	Target    string
+	BombID     string
+	Deadline   *time.Time
+	TargetFile string
 }
 
 func (lb *LogicBomb) Implant() {
-
+	
 }
 
 func (lb *LogicBomb) Disarm() {
