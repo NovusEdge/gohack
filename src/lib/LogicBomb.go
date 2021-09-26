@@ -2,12 +2,14 @@ package gohack
 
 import (
 	"time"
+	gutil "gohack/lib/utilities/General"
 )
 
 const (
 	WindowsLocate string = `%tmp`
 	UnixLoacte    string = "/usr/sbin"
 )
+
 
 type LogicBomb struct {
 	BombID     string
@@ -16,7 +18,7 @@ type LogicBomb struct {
 }
 
 func (lb *LogicBomb) Implant() {
-	
+
 }
 
 func (lb *LogicBomb) Disarm() {

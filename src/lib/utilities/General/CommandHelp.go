@@ -27,7 +27,7 @@ func CommandHelp(name string) {
 
 	var _stdout bytes.Buffer
 	var ct CommandTemplate = *ctp
-	PATH := GetEnv()["TOOLBINARIES"]
+	PATH := GohackEnvironment()["TOOLBINARIES"]
 
 	fmt.Printf("%s[*] Command Discription:%s \n\t%s\n\n", gohack.ColorYellow, gohack.ColorReset, ct.Discription)
 	fmt.Printf("%s[*]Usage:%s\n\tgohack %s [args...]\n\n", gohack.ColorYellow, gohack.ColorReset, ct.BinaryName)
