@@ -1,5 +1,13 @@
 package gohack
 
+import (
+	"io/ioutil"
+	"log"
+	"os"
+	"runtime"
+	"strings"
+)
+
 type Environment map[string]string
 
 func GohackEnvironment() map[string]string {
@@ -18,7 +26,7 @@ func GohackEnvironment() map[string]string {
 	envFile := home + "/.config/gohack"
 
 	env, err := ioutil.ReadFile(envFile)
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)
 	}

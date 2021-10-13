@@ -1,7 +1,7 @@
 package gohack
 
 import (
-	gohack "gohack/lib"
+	colors "gohack/lib"
 
 	"bytes"
 	"errors"
@@ -29,9 +29,9 @@ func CommandHelp(name string) {
 	var ct CommandTemplate = *ctp
 	PATH := GohackEnvironment()["TOOLBINARIES"]
 
-	fmt.Printf("%s[*] Command Discription:%s \n\t%s\n\n", gohack.ColorYellow, gohack.ColorReset, ct.Discription)
-	fmt.Printf("%s[*]Usage:%s\n\tgohack %s [args...]\n\n", gohack.ColorYellow, gohack.ColorReset, ct.BinaryName)
-	aliasHelp := fmt.Sprintf("%s[*] Supported aliases for %s:%s\n\t%s", gohack.ColorYellow, ct.BinaryName, gohack.ColorReset, strings.Join(ct.Aliases, "  "))
+	fmt.Printf("%s[*] Command Discription:%s \n\t%s\n\n", colors.ColorYellow, colors.ColorReset, ct.Discription)
+	fmt.Printf("%s[*]Usage:%s\n\tcolors %s [args...]\n\n", colors.ColorYellow, colors.ColorReset, ct.BinaryName)
+	aliasHelp := fmt.Sprintf("%s[*] Supported aliases for %s:%s\n\t%s", colors.ColorYellow, ct.BinaryName, colors.ColorReset, strings.Join(ct.Aliases, "  "))
 	toolPath := fmt.Sprintf("%s/%s", PATH, ct.BinaryName)
 
 	cmd := exec.Command(toolPath, "-h")
@@ -46,22 +46,22 @@ func CommandHelp(name string) {
 	helpString := _stdout.String()
 
 	temp := strings.Split(helpString, "\n")[1:]
-	fmt.Printf("%s[*] Arguments for %s:%s\n", gohack.ColorYellow, ct.BinaryName, gohack.ColorReset)
-	fmt.Println(gohack.ColorCyan, strings.Join(temp, "\n"), gohack.ColorReset)
+	fmt.Printf("%s[*] Arguments for %s:%s\n", colors.ColorYellow, ct.BinaryName, colors.ColorReset)
+	fmt.Println(colors.ColorCyan, strings.Join(temp, "\n"), colors.ColorReset)
 }
 
 func ShowCommands() {
-	fmt.Printf("\033[1;33m[*] Usage:\033[0m\n\t%sgohack [tool-name/alias] arguments...%s\n\n", gohack.ColorCyan, gohack.ColorReset)
-	fmt.Printf("\033[1m%s[~] List of tools and their aliases:%s\n\n", gohack.ColorPurple, gohack.ColorReset)
+	fmt.Printf("\033[1;33m[*] Usage:\033[0m\n\t%scolors [tool-name/alias] arguments...%s\n\n", colors.ColorCyan, colors.ColorReset)
+	fmt.Printf("\033[1m%s[~] List of tools and their aliases:%s\n\n", colors.ColorPurple, colors.ColorReset)
 	for _, template := range COMMANDS {
 		showOne(template)
 	}
-	fmt.Printf("%s[*] Use \"gohack help <tool-name/alias>\" for more information about a tool and it's usage.%s\n", gohack.ColorCyan, gohack.ColorReset)
+	fmt.Printf("%s[*] Use \"colors help <tool-name/alias>\" for more information about a tool and it's usage.%s\n", colors.ColorCyan, colors.ColorReset)
 }
 
 func showOne(ct CommandTemplate) {
-	aliasHelp := fmt.Sprintf("%s Supported aliases for %s:\n\t%s %s", gohack.ColorYellow, ct.BinaryName, strings.Join(ct.Aliases, "  "), gohack.ColorReset)
-	fmt.Printf("%sBinaryName: %s%s\n%s\n\n", gohack.ColorCyan, ct.BinaryName, gohack.ColorReset, aliasHelp)
+	aliasHelp := fmt.Sprintf("%s Supported aliases for %s:\n\t%s %s", colors.ColorYellow, ct.BinaryName, strings.Join(ct.Aliases, "  "), colors.ColorReset)
+	fmt.Printf("%sBinaryName: %s%s\n%s\n\n", colors.ColorCyan, ct.BinaryName, colors.ColorReset, aliasHelp)
 }
 
 func FindTemplate(name string) (*CommandTemplate, error) {
@@ -70,6 +70,6 @@ func FindTemplate(name string) (*CommandTemplate, error) {
 			return &template, nil
 		}
 	}
-	errMsg := fmt.Sprintf("%s[!] E: Could not find matching command.%s", gohack.ColorRed, gohack.ColorReset)
+	errMsg := fmt.Sprintf("%s[!] E: Could not find matching command.%s", colors.ColorRed, colors.ColorReset)
 	return nil, errors.New(errMsg)
 }

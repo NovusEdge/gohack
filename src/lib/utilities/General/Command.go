@@ -1,19 +1,13 @@
 package gohack
 
 import (
-	gohack "gohack/lib"
+	colors "gohack/lib"
 
 	"bytes"
 	"errors"
 	"fmt"
 	"os/exec"
-	"os"
 	"reflect"
-	"runtime"
-	"strings"
-	"io/ioutil"
-	"log"
-
 )
 
 // CommandTemplate
@@ -59,7 +53,7 @@ func MakeCommand(commandName string, args []string) *Command {
 
 // The useage has to be like:
 /*
-$ gohack <tool_name/alias> args ...
+$ colors <tool_name/alias> args ...
 */
 
 // ExecuteCommand: ...
@@ -72,7 +66,7 @@ func (c *Command) ExecuteCommand() (string, string, error) {
 	templateCheck := checkTemplate(c.Template)
 
 	if !(templateCheck) {
-		err := errors.New(gohack.ColorRed + "[!] E: Command Unavailable." + gohack.ColorReset)
+		err := errors.New(colors.ColorRed + "[!] E: Command Unavailable." + colors.ColorReset)
 		return "", "", err
 	}
 

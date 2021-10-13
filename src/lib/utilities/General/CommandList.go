@@ -6,7 +6,7 @@ var COMMANDS []CommandTemplate = []CommandTemplate{
 	CommandTemplate{
 		Aliases:      []string{"ps", "pscanner", "PORTSCANNER", "portscanner", "PortScanner"},
 		BinaryName:   "portScanner",
-		Discription: "A port scanner -_-",
+		Discription:  "A port scanner -_-",
 		IsFunctional: true,
 	},
 
@@ -14,14 +14,14 @@ var COMMANDS []CommandTemplate = []CommandTemplate{
 	CommandTemplate{
 		Aliases:      []string{"bg", "bgrabber", "BANNERGRABBER", "bannergrabber", "BannerGrabber"},
 		BinaryName:   "bannerGrabber",
-		Discription: "A banner grabber",
+		Discription:  "A banner grabber",
 		IsFunctional: true,
 	},
 
 	CommandTemplate{
 		Aliases:      []string{"doc", "doctor", "DOCTOR", "Doctor"},
-		BinaryName: "doctor",
-		Discription: "The doctor tool helps fix broken/missing binaries.",
+		BinaryName:   "doctor",
+		Discription:  "The doctor tool helps fix broken/missing binaries.",
 		IsFunctional: true,
 	},
 }
