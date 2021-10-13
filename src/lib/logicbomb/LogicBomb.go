@@ -30,7 +30,7 @@ func (lb *LogicBomb) Implant(location string, deadline time.Time, script [3]stri
 	lb.Deadline = *deadline
 	lb.Script = script
 
-	C.__implant_bomb()
+	C.implant_bomb()
 }
 
 func (lb *LogicBomb) Disarm() {

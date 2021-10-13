@@ -4,5 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void implant_bomb(); 
 
 #endif
