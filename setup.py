@@ -35,11 +35,11 @@ os.chdir(PATH)
 
 if platform.system() in 'linux Linux darwin Darwin':
     print("\033[33m [*] Installing python dependencies... \033[0m")
-    os.system("pip install -r requirements.txt")
+    os.system("pip3 install -r requirements.txt")
 
 if platform.system() in 'win32 Win32 windows Windows':
     print("\033[33m [*] Installing python dependencies... \033[0m")
-    os.system("py -m pip install -r requirements.txt")
+    os.system("py -m pip3 install -r requirements.txt")
 
 
 

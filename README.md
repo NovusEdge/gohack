@@ -21,5 +21,5 @@ The MIT License (MIT). Please see [License File](LICENSE) for more information.
 ***
 
 #### _:exclamation: Warning :exclamation:_
-Please type responsibly. Any and all malicious activities that make use of this project in any way are not the responsibility of the project owner. This project only aims to be used for educational/demonstrational purposes.
+Please type responsibly. Any malicious activities that make use of or involve this project in any way are not the responsibility of the project owner. This project only aims to be used for educational/demonstrational purposes.
 **:zap: Ignore at your own risk!**
