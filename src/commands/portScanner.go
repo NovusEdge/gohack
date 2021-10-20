@@ -2,8 +2,9 @@ package main
 
 import (
 	"flag"
-	p "gohack/lib"
 	"time"
+
+	gops "github.com/NovusEdge/go-ps"
 )
 
 func main() {
@@ -23,7 +24,7 @@ func main() {
 
 	flag.Parse()
 
-	ps := p.PortScanner{
+	ps := gops.PortScanner{
 		Domain:   domain,
 		Protocol: protocol,
 	}

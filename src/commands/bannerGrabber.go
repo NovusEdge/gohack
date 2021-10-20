@@ -2,7 +2,8 @@ package main
 
 import (
 	"flag"
-	src "gohack/lib"
+
+	gobg "github.com/NovusEdge/go-bg"
 )
 
 func main() {
@@ -11,6 +12,6 @@ func main() {
 
 	flag.Parse()
 
-	bg := src.BannerGrabber{URL: url}
+	bg := gobg.BannerGrabber{URL: url}
 	bg.Grab()
 }
