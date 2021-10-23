@@ -1,7 +1,3 @@
-github.com/NovusEdge/go-bg v1.0.0 h1:QumFaNCDrXOsczsl3qHAJd+qKWolsHvGv/XJgM1JzIo=
-github.com/NovusEdge/go-bg v1.0.0/go.mod h1:IJZlKmdzXIOzTfInXEccOCXh9WEyZEIMh9itO5r0e9Y=
-github.com/NovusEdge/go-bg v1.0.1 h1:u7+FsEUb0LbA4j1BXLmofbQmpTD0y9LTCATvx4t5T30=
-github.com/NovusEdge/go-bg v1.0.1/go.mod h1:IJZlKmdzXIOzTfInXEccOCXh9WEyZEIMh9itO5r0e9Y=
 github.com/NovusEdge/go-bg v1.0.2 h1:xyMg20JZo/xMhUpEKSfWHfoYb2lwPtARwgB57+vU8q0=
 github.com/NovusEdge/go-bg v1.0.2/go.mod h1:IJZlKmdzXIOzTfInXEccOCXh9WEyZEIMh9itO5r0e9Y=
 github.com/NovusEdge/go-ps v1.0.5 h1:7YN1xy4qKdZwqokt2rTl8wkdmuhM6ylXlVjNo/HDdTs=

@@ -2,13 +2,12 @@ package main
 
 import (
 	gohack "gohack/lib"
-	helpers "gohack/lib/utilities/General"
+	cmdutil "gohack/lib/cmdutil"
 
 	"fmt"
 	"log"
 	"os"
 	"strings"
-
 )
 
 func main() {
@@ -17,10 +16,10 @@ func main() {
 		os.Exit(0)
 	}
 
-	command := helpers.MakeCommand(args[0], args[1:])
+	command := cmdutil.MakeCommand(args[0], args[1:])
 	if command == nil {
 		fmt.Printf("%s[!] Invalid command: \"%s\"%s\n", gohack.ColorRed, args[0], gohack.ColorReset)
-		helpers.ShowCommands()
+		cmdutil.ShowCommands()
 		os.Exit(0)
 	}
 
@@ -41,31 +40,31 @@ func main() {
 
 func checkForHelp(args []string) bool {
 	if len(args) == 0 {
-		helpers.ShowCommands()
+		cmdutil.ShowCommands()
 		return true
 	}
 
 	if len(args) > 1 {
 		if args[1] == "-h" || args[1] == "--help" {
-			helpers.CommandHelp(args[0])
+			cmdutil.CommandHelp(args[0])
 			return true
 		}
 	}
 
 	if args[0] == "help" || args[0] == "-h" || args[0] == "--help" {
 		if len(args) == 1 {
-			helpers.ShowCommands()
+			cmdutil.ShowCommands()
 			return true
 		}
 		tool := args[1]
-		helpers.CommandHelp(tool)
+		cmdutil.CommandHelp(tool)
 		return true
 	}
 
 	if len(args) == 1 {
-		ok, _ := helpers.FindTemplate(args[0])
+		ok, _ := cmdutil.FindTemplate(args[0])
 		if ok != nil {
-			helpers.CommandHelp(args[0])
+			cmdutil.CommandHelp(args[0])
 			return true
 		}
 	}
