@@ -4,6 +4,9 @@
 
 <br><br>
 
+# IMPORTANT NOTICE
+The `gohack` project has been discontinued and is no longer under any kind of development. Please, if you wish to use something similar, try visiting the [ARaChn3](https://github.com/ARaChn3) organization's page.
+
 # gohack :rocket: :school_satchel: :tada:
 `gohack` is a general-purpose tool library written in Go.
 
